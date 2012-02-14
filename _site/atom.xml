@@ -4,7 +4,7 @@
  <title>mamonluk</title>
  <link href="http://tom.preston-werner.com/atom.xml" rel="self"/>
  <link href="http://tom.preston-werner.com/"/>
- <updated>2012-02-09T02:06:24-08:00</updated>
+ <updated>2012-02-14T02:32:30-08:00</updated>
  <id>http://mamonluk.github.com/</id>
  <author>
    <name>mamonluk</name>
@@ -13,200 +13,377 @@
 
  
  <entry>
-   <title>Open Source (Almost) Everything</title>
-   <link href="http://tom.preston-werner.com/2011/11/22/open-source-everything.html"/>
-   <updated>2011-11-22T00:00:00-08:00</updated>
-   <id>http://tom.preston-werner.com/2011/11/22/open-source-everything</id>
-   <content type="html">&lt;h1&gt;Open Source (Almost) Everything&lt;/h1&gt;
+   <title>Android Week#3</title>
+   <link href="http://tom.preston-werner.com/2012/02/02/Android_week3.html"/>
+   <updated>2012-02-02T00:00:00-08:00</updated>
+   <id>http://tom.preston-werner.com/2012/02/02/Android_week3</id>
+   <content type="html">&lt;h1&gt;Android Week#3&lt;/h1&gt;
 
-&lt;p class=&quot;meta&quot;&gt;22 Nov 2011 - San Francisco&lt;/p&gt;
+&lt;p class=&quot;meta&quot;&gt;2 Feb 2011 - San Francisco&lt;/p&gt;
 
-
-&lt;p&gt;When Chris and I first started working on GitHub in late 2007, we split the work into two parts. Chris worked on the Rails app and I worked on Grit, the first ever Git bindings for Ruby. After six months of development, Grit had become complete enough to power GitHub during our public launch of the site and we were faced with an interesting question:&lt;/p&gt;
-
-&lt;p&gt;Should we open source Grit or keep it proprietary?&lt;/p&gt;
-
-&lt;p&gt;Keeping it private would provide a higher hurdle for competing Ruby-based Git hosting sites, giving us an advantage. Open sourcing it would mean thousands of people worldwide could use it to build interesting Git tools, creating an even more vibrant Git ecosystem.&lt;/p&gt;
-
-&lt;p&gt;After a small amount of debate we decided to open source Grit. I don't recall the specifics of the conversation but that decision nearly four years ago has led to what I think is one of our most important core values: open source (almost) everything.&lt;/p&gt;
-
-&lt;h2&gt;Why is it awesome to open source (almost) everything?&lt;/h2&gt;
-
-&lt;p&gt;If you do it right, open sourcing code is &lt;strong&gt;great advertising&lt;/strong&gt; for you and your company. At GitHub we like to talk publicly about libraries and systems we've written that are still closed but destined to become open source. This technique has several advantages. It helps determine what to open source and how much care we should put into a launch. We recently open sourced Hubot, our chat bot, to widespread delight. Within two days it had 500 watchers on GitHub and 409 upvotes on Hacker News. This translates into goodwill for GitHub and more superfans than ever before.&lt;/p&gt;
-
-&lt;p&gt;If your code is popular enough to attract outside contributions, you will have created a &lt;strong&gt;force multiplier&lt;/strong&gt; that helps you get more work done faster and cheaper. More users means more use cases being explored which means more robust code. Our very own &lt;a href=&quot;https://github.com/defunkt/resque&quot;&gt;resque&lt;/a&gt; has been improved by 115 different individuals outside the company, with hundreds more providing 3rd-party plugins that extend resque's functionality. Every bug fix and feature that you merge is time saved and customer frustration avoided.&lt;/p&gt;
-
-&lt;p&gt;Smart people like to hang out with other smart people. Smart developers like to hang out with smart code. When you open source useful code, you &lt;strong&gt;attract talent&lt;/strong&gt;. Every time a talented developer cracks open the code to one of your projects, you win. I've had many great conversations at tech conferences about my open source code. Some of these encounters have led to ideas that directly resulted in better solutions to problems I was having with my projects. In an industry with such a huge range of creativity and productivity between developers, the right eyeballs on your code can make a big difference.&lt;/p&gt;
-
-&lt;p&gt;If you're hiring, &lt;strong&gt;the best technical interview possible&lt;/strong&gt; is the one you don't have to do because the candidate is already kicking ass on one of your open source projects. Once technical excellence has been established in this way, all that remains is to verify cultural fit and convince that person to come work for you. If they're passionate about the open source code they've been writing, and you're the kind of company that cares about well-crafted code (which clearly you are), that should be simple! We hired &lt;a href=&quot;https://github.com/tanoku&quot;&gt;Vicent Martí&lt;/a&gt; after we saw him doing stellar work on &lt;a href=&quot;https://github.com/libgit2/libgit2&quot;&gt;libgit2&lt;/a&gt;, a project we're spearheading at GitHub to extract core Git functionality into a standalone C library. No technical interview was necessary, Vicent had already proven his skills via open source.&lt;/p&gt;
-
-&lt;p&gt;Once you've hired all those great people through their contributions, dedication to open source code is an amazingly effective way to &lt;strong&gt;retain that talent&lt;/strong&gt;. Let's face it, great developers can take their pick of jobs right now. These same developers know the value of coding in the open and will want to build up a portfolio of projects they can show off to their friends and potential future employers. That's right, a paradox! In order to keep a killer developer happy, you have to help them become more attractive to other employers. But that's ok, because that's exactly the kind of developer you want to have working for you. So relax and let them work on open source or they'll go somewhere else where they can.&lt;/p&gt;
-
-&lt;p&gt;When I start a new project, I assume it will eventually be open sourced (even if it's unlikely). This mindset leads to &lt;strong&gt;effortless modularization&lt;/strong&gt;. If you think about how other people outside your company might use your code, you become much less likely to bake in proprietary configuration details or tightly coupled interfaces. This, in turn, leads to cleaner, more maintainable code. Even internal code should pretend to be open source code.&lt;/p&gt;
-
-&lt;p&gt;Have you ever written an amazing library or tool at one job and then left to join another company only to rewrite that code or remain miserable in its absence? I have, and it sucks. By getting code out in the public we can drastically &lt;strong&gt;reduce duplication of effort&lt;/strong&gt;. Less duplication means more work towards things that matter.&lt;/p&gt;
-
-&lt;p&gt;Lastly, &lt;strong&gt;it's the right thing to do&lt;/strong&gt;. It's almost impossible to do anything these days without directly or indirectly executing huge amounts of open source code. If you use the internet, you're using open source. That code represents millions of man-hours of time that has been spent and then given away so that everyone may benefit. We all enjoy the benefits of open source software, and I believe we are all morally obligated to give back to that community. If software is an ocean, then open source is the rising tide that raises all ships.&lt;/p&gt;
-
-&lt;h2&gt;Ok, then what shouldn't I open source?&lt;/h2&gt;
-
-&lt;p&gt;That's easy. Don't open source anything that represents core business value.&lt;/p&gt;
-
-&lt;p&gt;Here are some examples of what we don't open source and why:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Core GitHub Rails app (easier to sell when closed)&lt;/li&gt;
-&lt;li&gt;The Jobs Sinatra app (specially crafted integration with github.com)&lt;/li&gt;
+&lt;li&gt;Any kind of string you create, should definitely in the string resource file. You should put it in .xml file&lt;/li&gt;
+&lt;li&gt;The advantage of using xml file in resource file is you don't have to recompile the data. If you want to change the string you just need to modify the xml file.&lt;/li&gt;
 &lt;/ul&gt;
 
 
-&lt;p&gt;Here are some examples of things we do open source and why:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinearLayout&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;xmlns:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//notice something different all the xml layout start with android:name, //android:string…etc but this one starts with xmlns:android, &lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//this is the only one that has android in the back. &lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//All other attributes starts with android:&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h1&gt;For colors.xml&lt;/h1&gt;
+
+&lt;p&gt;located in res/values/ - you need to create this file manually, filename doesn't need to be colors.xml&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Grit (general purpose Git bindings, useful for building many tools)&lt;/li&gt;
-&lt;li&gt;Ernie (general purpose BERT-RPC server)&lt;/li&gt;
-&lt;li&gt;Resque (general purpose job processing)&lt;/li&gt;
-&lt;li&gt;Jekyll (general purpose static site generator)&lt;/li&gt;
-&lt;li&gt;Gollum (general purpose wiki app)&lt;/li&gt;
-&lt;li&gt;Hubot (general purpose chat bot)&lt;/li&gt;
-&lt;li&gt;Charlock_Holmes (general purpose character encoding detection)&lt;/li&gt;
-&lt;li&gt;Albino (general purpose syntax highlighting)&lt;/li&gt;
-&lt;li&gt;Linguist (general purpose filetype detection)&lt;/li&gt;
+&lt;li&gt;Read chapter 3 pp64 (Android pro) this is the most important chapter in the textbook&lt;/li&gt;
+&lt;li&gt;all your resource file needs to have &amp;lt;?xml version=&quot;1&quot; encoding=&quot;utf=8&quot;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 
-&lt;p&gt;Notice that everything we keep closed has specific business value that could be compromised by giving it away to our competitors. Everything we open is a general purpose tool that can be used by all kinds of people and companies to build all kinds of things.&lt;/p&gt;
+&lt;p&gt;Inside the color.xml&lt;/p&gt;
 
-&lt;h2&gt;What is the One True License?&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;red&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f00&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0000&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;green&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f0f0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;I prefer the MIT license and almost everything we open source at GitHub carries this license. I love this license for several reasons:&lt;/p&gt;
+
+&lt;p&gt;Inside your main.xml&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;@color/red&amp;quot;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//this will automatically look for variable color name red&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;andoird:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;helloWorld&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Inside R.java&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cs211d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;R&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;attr&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;color&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x7f030001&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x7f040001&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;layout&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x7f001&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;string&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...;&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x9&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xA&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h1&gt;In AndroidManifest.xml&lt;/h1&gt;
+
+&lt;p&gt;located in the root of a project, this file contain the complete detail of each project i.e. contain the activities, you can modify this file so that you will be in &lt;strong&gt;debug mode&lt;/strong&gt; , also this is modifiable&lt;/p&gt;
+
+&lt;h1&gt;how to debug your program&lt;/h1&gt;
+
+&lt;p&gt;In android debug has 2 context/meaning&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;It's short. Anyone can read this license and understand exactly what it means without wasting a bunch of money consulting high-octane lawyers.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Enough protection is offered to be relatively sure you won't sue me if something goes wrong when you use my code.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Everyone understands the legal implications of the MIT license. Weird licenses like the WTFPL and the Beer license pretend to be the &quot;ultimate in free licenses&quot; but utterly fail at this goal. These fringe licenses are too vague and unenforceable to be acceptable for use in some companies. On the other side, the GPL is too restrictive and dogmatic to be usable in many cases. I want everyone to benefit from my code. Everyone. That's what Open should mean, and that's what Free should mean.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;loading into your device and debuging it&lt;/li&gt;
+&lt;li&gt;using logcat&lt;/li&gt;
 &lt;/ul&gt;
 
 
-&lt;h2&gt;Rad, how do I get started?&lt;/h2&gt;
+&lt;h1&gt;log class&lt;/h1&gt;
 
-&lt;p&gt;Easy, just flip that switch on your GitHub repository from private to public and tell the world about your software via your blog, Twitter, Hacker News, and over beers at your local pub. Then sit back, relax, and enjoy being part of something big.&lt;/p&gt;
+&lt;p&gt;made for logging information for our program, need to import in your code &lt;code&gt;import android.util.Log&lt;/code&gt;. Also it comes with static method&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://news.ycombinator.com/item?id=3267432&quot;&gt;Discuss this post on Hacker News&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;int Log.e(...) //for error&lt;/li&gt;
+&lt;li&gt;int Log.w(...) //for warnings&lt;/li&gt;
+&lt;li&gt;int Log.i(...) //for information message&lt;/li&gt;
+&lt;li&gt;int Log.d(...) //for debug message&lt;/li&gt;
+&lt;li&gt;int Log.v(...) //verbose message&lt;/li&gt;
+&lt;li&gt;int wtf        //what a terrible function&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Sample Code
+&lt;code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;try 
+{
+    String tag=&quot;In my lost hw&quot;;
+} catch(Exception e) { Log.e (tag, &quot;my error ....&quot;); }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Log.v(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.d(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.d(tag, message, e)&lt;/li&gt;
+&lt;li&gt;Log.e(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.e(tag, message, e)&lt;/li&gt;
+&lt;li&gt;Log.i(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.i(tag, message, e)&lt;/li&gt;
+&lt;li&gt;Log.w(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.w(tag, message, e)&lt;/li&gt;
+&lt;li&gt;Log.wtf(tag, message)&lt;/li&gt;
+&lt;li&gt;Log.wtf(tag, message, e)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Accessing logcat in command line&lt;/h1&gt;
+
+&lt;p&gt;type in &lt;code&gt;adb logcat&lt;/code&gt; located in platform-tools folder&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Abbase provided file called &lt;code&gt;lcat&lt;/code&gt; located in his home directory
+
+&lt;ul&gt;
+&lt;li&gt;will filterized your logcat&lt;/li&gt;
+&lt;li&gt;@use: lcat &quot;hw#1&quot;&lt;/li&gt;
+&lt;li&gt;@use: lcat -e   //empty logcat&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adb logcat -f my_oldlogcat&lt;/code&gt; //saves the current logcat&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adb logcat -d&lt;/code&gt; - dumps the current message then stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adb logcat MyActibity:I MyApp:D *:S&lt;/code&gt;  //show information, show debug message, don't show reast of the file supress it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
 </content>
  </entry>
  
  <entry>
-   <title>Rejected Bio from The Setup</title>
-   <link href="http://tom.preston-werner.com/2011/05/03/rejected-bio-from-the-setup.html"/>
-   <updated>2011-05-03T00:00:00-07:00</updated>
-   <id>http://tom.preston-werner.com/2011/05/03/rejected-bio-from-the-setup</id>
-   <content type="html">&lt;h1&gt;Rejected Bio from The Setup&lt;/h1&gt;
+   <title>Android Week#2</title>
+   <link href="http://tom.preston-werner.com/2012/01/25/Android_week2.html"/>
+   <updated>2012-01-25T00:00:00-08:00</updated>
+   <id>http://tom.preston-werner.com/2012/01/25/Android_week2</id>
+   <content type="html">&lt;h1&gt;Android Week#2&lt;/h1&gt;
 
-&lt;p class=&quot;meta&quot;&gt;03 May 2011 - San Francisco&lt;/p&gt;
-
-
-&lt;p&gt;Yesterday, &lt;a href=&quot;http://tom.preston-werner.usesthis.com/&quot;&gt;the autobiographical post I wrote for The
-Setup&lt;/a&gt; went live. I wrote that post
-over a year ago and then entered into an epic battle with
-&lt;a href=&quot;http://twitter.com/#!/waferbaby&quot;&gt;@waferbaby&lt;/a&gt; about the length of my &quot;Who are
-you, and what do you do?&quot; section. He said it was too long. I said it could
-not be shortened. And so the post sat for a year, collecting dust, neither of
-us prepared to back down.&lt;/p&gt;
-
-&lt;p&gt;About a month ago I decided that it was foolish to let the words I had written rot on my hard drive and so I did the only thing I knew how to do: overreact. So I cut the original nine-hundred words of my bio down to fourteen words and resubmitted it to Daniel. Those are the words you see in the post now.&lt;/p&gt;
-
-&lt;p&gt;For your pleasure, here is the original bio in its full, unabridged glory.&lt;/p&gt;
-
-&lt;hr /&gt;
+&lt;p class=&quot;meta&quot;&gt;22 Nov 2011 - San Francisco&lt;/p&gt;
 
 
-&lt;p&gt;My name is Tom Preston-Werner. I find that the hyphenated last name
-makes me sound distinguished and worth listening to. I grew up three
-decades ago in a small city in Iowa along the Mississippi, which means
-I shucked a lot of corn and know exactly how many mosquitos will land
-on your arm should you hold it still for ten minutes at dusk on the
-muggiest day of the summer. As an aspiring theoretical particle
-physicist, I worked my way through entire shelves of scientific
-literature from the public library, desperately wanting to understand
-the bewildering mathematics that littered the pages like so many
-leaves on the bottom of that morning's cup of green tea. I searched in
-vain for instructors or classmates that could provide me with the
-insight necessary to comprehend the true meaning of Heisenberg's
-Uncertainty Principle, but all I found were underpaid math teachers
-and disillusioned &quot;students&quot; in search of their next smoke break.
-After obsessing over US News' Best Colleges reports for months I
-finally chose and was accepted to Harvey Mudd, a tiny engineering
-school in California famous for assigning the greatest number of hours
-of homework per night. This sounded just perfect to me. Finally a
-place I could bring up the EPR Paradox and not be immediately
-stigmatized as &quot;that science weirdo with the hilariously thick glasses
-and unfortunate hairdo.&quot;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.5 obsolete&lt;/li&gt;
+&lt;li&gt;2.1 2.2 2.3 are good version
+*Android - there are two separate package - SDK starter package(install this first), SDK components(install this second)&lt;/li&gt;
+&lt;li&gt;Install SDK starter package in C:\Google or C:\Android&lt;/li&gt;
+&lt;li&gt;http://developer.android.com/sdk&lt;/li&gt;
+&lt;li&gt;install eclipse 3.6&lt;/li&gt;
+&lt;li&gt;after installing SDK - tool folder will be created, inside there is a program called android, type in &lt;code&gt;android&lt;/code&gt; then a window will open&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Mudd did not disappoint. But now I had the opposite problem. In order
-to properly understand particle physics, you must have a deep and
-profound love of math. You have to be so comfortable with abstract
-concepts that even Picasso would be jealous. Ironically, in order to
-grasp the fundamental reality of our universe, you must forget about
-the &quot;reality&quot; of everyday life and start living in a world comprised
-of eigenvectors, Hilbert spaces, and Planck's constant. This was a
-leap I could not make. I like math, but I'm too easily distracted by
-macroscopic reality to make it my profession.&lt;/p&gt;
 
-&lt;p&gt;Once I accepted that I would never spend late nights poring over
-bubble chamber printouts at Fermilab, it became obvious that I was
-destined to enter computer science. I started programming in BASIC on
-a TRS-80 that my dad bought from Radio Shack when I was 8 years old.
-Since then, I'd learned to love the discipline and creativity involved
-in making a machine do my bidding. It was like having a super-obedient
-but annoyingly logical little brother. He'll do anything you want as
-long as you tell him in precise and unambiguous language. The best
-thing is, the feedback is immediate. In physics, it can take twenty
-years to prove that a single esoteric particle even exists. When
-you're writing a program that displays the number of electrons in each
-of the shells around the nucleus of every element, the feedback is
-immediate and intoxicating. With just a few keystrokes, the world is
-changed forever. Try to get that kind of rush even once in a lifetime
-as a theoretical particle physicist. I dare you.&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 
-&lt;p&gt;In 1999, after two years of college, I dropped out of Harvey Mudd to
-join a startup with some friends that were graduating. It was the end
-of the first dot-com bubble and I thought I could strike it rich,
-right then and there. Sadly, like so many startups of the day, we
-never accomplished what we envisioned and I ended up bouncing between
-jobs and consulting gigs for six years until I found myself in San
-Francisco. If Harvey Mudd was my mecca for physicists, then San
-Francisco was my mecca for programmers. Where else can you be grabbing
-lunch at a taqueria and overhear a group at the next table discussing
-the finer points of optimizing C code to run on an embedded processor?&lt;/p&gt;
+&lt;h1&gt;Eclipse plugins for Android - need to install ADT&lt;/h1&gt;
 
-&lt;p&gt;I moved to San Francisco to take a job as a Ruby developer with a
-Wikipedia search engine called Powerset. I also began attending Ruby
-meetups and drinking with local software developers. There are a lot
-of talented people in the Bay Area and I wanted to meet them all.
-Within the Ruby community, a distributed version control system called
-Git was starting to get some attention. It was a really cool way of
-working with other people on code, but there wasn't an easy way to get
-up and running with a group of developers. Along with cofounders Chris
-Wanstrath and PJ Hyett (who I met at the Ruby meetups) I started a
-company called GitHub that would address this problem and make it dead
-simple to share Git repositories and collaborate on code with other
-developers.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Help -&gt; install new software -&gt; Available SOftware&lt;/li&gt;
+&lt;li&gt;Android Development Tools for Name&lt;/li&gt;
+&lt;li&gt;http://dl-ssl.google.com/android/eclipse&lt;/li&gt;
+&lt;li&gt;After installing plugin you need to specify where android folder is i.e. window -&gt; preference -&gt; Android&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;p&gt;At first, we worked on GitHub on the side, putting in time on evenings
-and weekends. After six months we launched the site to the public and
-started charging. Not long after that, Powerset was acquired by
-Microsoft and I was faced with a choice: stay on as a Microsoft
-employee with a big retention bonus and give up GitHub or turn down
-the Microsoft money and quit Powerset to work on GitHub full-time. You
-can read more about this saga in my blog post entitled &lt;a href=&quot;http://tom.preston-werner.com/2008/10/18/how-i-turned-down-300k.html&quot;&gt;How I Turned
-Down $300,000 from Microsoft to go Full-Time on
-GitHub&lt;/a&gt;.
-I think I made the right decision.&lt;/p&gt;
 
-&lt;p&gt;Today GitHub has twenty-nine employees and more than 730,000 users with over
-2,000,000 repositories. We're growing fast, and I'm having the time of
-my life!&lt;/p&gt;
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Creating new project&lt;/h1&gt;
+
+&lt;p&gt;After creating a new project - you need to create AVD=andriod virtual device&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Remem if you are not using eclipse to compile your android you need to install ant - ant is created to compile java programs, this is the same as make in c/c++&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ant uses xml&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Remem Android does not use JVM instead it uses dalvik compiler&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;JAVA_HOME&lt;/code&gt; variable will show you where java is installed&lt;/li&gt;
+&lt;li&gt;Create variable &lt;code&gt;ANT_HOME&lt;/code&gt; and point it to ant directory&lt;/li&gt;
+&lt;li&gt;create PATH = $PATH:$JAVA_HOME/bin:$ANT_HOME/bin&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Creating AVD&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;(In eclipse) Window -&gt; Andoird SDK -&gt; AVD manager
+
+&lt;ul&gt;
+&lt;li&gt;pick a name for emulator - like em22, em16&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Another way of creating AVD (command line)
+  *in tools folder type &quot;android&quot;. then window will pop out&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Creating Project in eclipse&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Go to File -&gt; new -&gt; project -&gt; Android -&gt; android project&lt;/li&gt;
+&lt;li&gt;project name:&lt;/li&gt;
+&lt;li&gt;use default location&lt;/li&gt;
+&lt;li&gt;Build Target, Select 2.3 9(API LEVEL),  Application name, package name&lt;/li&gt;
+&lt;li&gt;create activity:______&lt;/li&gt;
+&lt;li&gt;minimum SDK version ______&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Creating new project in command line&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;android create project --target9 --path /mypath/dir --activity Now --package my.Now --name my_prog&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;cd /mypath/dir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ant install&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;creating avd &lt;code&gt;andorid create avd -n em22 -t 9&lt;/code&gt; 9 is the API level&lt;/li&gt;
+&lt;li&gt;running the emulator &lt;code&gt;emulator -avd em22&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+
+&lt;h1&gt;Overview of the src in Android Project&lt;/h1&gt;
+
+&lt;p&gt;Inside the gen subdirectory it contains the following&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;R.java&lt;/code&gt; - this is automatically created, contains information about layourt file,xml, do not edit this file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assets&lt;/code&gt; - this is where you put all your file, like program&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;res&lt;/code&gt; - this contains the resoruces of you applications
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;drawable&lt;/code&gt; - contains images -JPEG, PNG&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;anim&lt;/code&gt; - subdirectory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;layout&lt;/code&gt; - GUI&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;menu&lt;/code&gt; - contain xml&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;values&lt;/code&gt; - contains strings.xml - strings.xml contains all the string variable, arrays.xml, colors.xml, styles.xml&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;raw&lt;/code&gt; - this contains additional data none of them are xml file
+  *this is where you put non xml file like data file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bin&lt;/code&gt; - this contains all your jar files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libs&lt;/code&gt; - contains the class files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bin/classes.dex&lt;/code&gt; - contains the dex file which is the executable for android device&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h1&gt;Sample Program&lt;/h1&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//name HelloCS211D.java&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cs211d&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.app.Activity&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.Bundle&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Hellocs211d&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activity&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//called when activity is first created&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;setContentView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//there is an xml file in layout folder - res/layout/main.xml&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//later on we are going to use R.layout.string&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;Inside main.xml&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xml&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;!--&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Author:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;!--&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;course:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cs211d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinearLayout&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;xmlns:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt; 
+    &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orientation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layout_width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fill_parent&amp;quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//or wrap_content&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layout_height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fill_parent&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TextView&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layout_width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fill_parent&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;andorid:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layout_height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wrap_content&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;HelloWorld, Hello cs211d&amp;quot;&lt;/span&gt;  
+    &lt;span class=&quot;c1&quot;&gt;//recommend do not hard code your string instead put it in string.xml&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinearLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Android Week#1</title>
+   <link href="http://tom.preston-werner.com/2012/01/19/Android_week1.html"/>
+   <updated>2012-01-19T00:00:00-08:00</updated>
+   <id>http://tom.preston-werner.com/2012/01/19/Android_week1</id>
+   <content type="html">&lt;h1&gt;Android Week#1&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;26 Jan 2012 - San Francisco&lt;/p&gt;
+
+
+&lt;p&gt;1.5 Cupcake - API Level 3
+1.6 Donut   - API Level 4&lt;/p&gt;
+
+&lt;p&gt;Version 2, 2.01, 2.1 Eclair    API   is 5,6,7&lt;/p&gt;
+
+&lt;p&gt;Version 2.2.x    -  Froyo  -    API  is level 8&lt;/p&gt;
+
+&lt;p&gt;Version 2.3 - 2.3.2,   2.33 - 2.3.7    - Gingerbread   API - 9, 10&lt;/p&gt;
+
+&lt;p&gt;Version 3.0, 3.1, 3.2.x,    -   Honeycomb   API - 11, 12&lt;/p&gt;
+
+&lt;p&gt;Version 4.01  - 4.02 , 4.03   IceCreamSandwich  -  API Level 14,15  (mostly use in tablets)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;There is a shell specifically built for android this is called  &quot;ash&quot;&lt;/li&gt;
+&lt;li&gt;adb command to communicate with ash&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;Structure of java&lt;/h2&gt;
+
+&lt;p&gt;Apps  =&gt; Java SDK  =&gt; nataive libraries =&gt; Android Runtimes Dalvik DVM =&gt; Linux kernel&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;we will use SQLite&lt;/li&gt;
+&lt;li&gt;we will use lib&lt;/li&gt;
+&lt;li&gt;we will use webkit&lt;/li&gt;
+&lt;li&gt;we will use SSL   -  secure security layer&lt;/li&gt;
+&lt;li&gt;location manager&lt;/li&gt;
+&lt;li&gt;package manager  - putting all the different pieces of ur application together&lt;/li&gt;
+&lt;li&gt;content provider  -  provide number such as names, random number&lt;/li&gt;
+&lt;li&gt;window manager - this is the GUI that display the GUI different from Swing and AWT&lt;/li&gt;
+&lt;li&gt;activity manager - each piece in android is called activity, i.e. opening video when app is opening. Main activity&lt;/li&gt;
+&lt;/ul&gt;
+
 </content>
  </entry>
  
