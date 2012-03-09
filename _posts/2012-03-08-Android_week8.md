@@ -40,7 +40,7 @@ if(System.Environment.DeviceType != DeviceType.Emulator);
 }
 {% endhighlight %}
 
-* if oyu want to test if running of emulator or phone
+* if you want to test if program is running on emulator or phone
 
 {% highlight java %}
 if("google_sdk".equals(Buid.PRODUCT))
@@ -69,3 +69,72 @@ public boolean isEmulator()
 	return Build.MANUFACTURER.equalsIgnoreCase("unknown");  //
 }
 {% endhighlight %}
+
+* Running a script to check if emulator is running
+
+{% highlight java %}
+a=$(adb devices | grep emulator)
+if[ -z "$a" ]; then
+	echo "no emulator up & running"
+	exit 1
+fi
+b=$(echo $a | grep "offline")
+if [ -n "$b" ];
+	echo "no emulator running"
+	exit 2
+fi
+{% endhighlight %}
+
+###Creating Extra data
+{% highlight java %}
+Intent in = new Intent(getApplicationContext(), HelpActivity.class);
+in.putExtra("com.cs211d.chippy.LEVEL", 23);
+startActivity(in);
+//			key             value
+//putExtra(String name, boolean value)
+					    int 
+					    double
+					    String
+					    float
+					    int []
+{% endhighlight %}
+* Retrieving data from the other acticity
+{% highlight java %}
+Intent in = getIntent();
+int helpLevel = in.getIntExtra("com.cs211d.chippy.Level", 1);
+								//the 1 is the default value
+{% endhighlight %}
+
+* How to know which Activity sent the data
+`this.getIntent.getData` -return the uri of activity who sent the data i.e. screen1.class returns null if data is empty
+
+* Another way of sending data to an intent
+
+{% highlight java %}
+Bundle b= new Bundle()
+b.putString("Name", "John");  //b.putString("Name", "82");
+in.putExtra(b);
+//in is object of Intent
+{% endhighlight %} 
+
+* Transferring large amount of data to an activity
+
+{% highlight java %}
+int nums[]={3,9,5,17};
+Intent in = new Intent(this, B.class);
+in.putExtra("numbers", nums);
+startActivity(in);
+{% endhighlight %}
+* Receiving the large data from an activity
+{% highlight java %}
+Bundle b = getIntent().getExtra();
+int nums[]=b.getIntArray("numbers");  //remem there is no default values
+{% endhighlight %}
+
+* pp 123 in book alot of examples about transferring data
+
+<br/>
+* Transferring array list to an ac
+
+
+
