@@ -63,13 +63,9 @@ if("google_sdk".equals(Buid.PRODUCT))
 
 * another way of testing if it's running on the phone
 
-sdfsd
-
-
-
-
-  	public boolean isEmulator()
-	{
-		return Build.MANUFACTURER.equalsIgnoreCase("unknown");  //
-	}
-
+{% highlight java %}
+public boolean isEmulator()
+{
+	return Build.MANUFACTURER.equalsIgnoreCase("unknown");  //
+}
+{% endhighlight %}
