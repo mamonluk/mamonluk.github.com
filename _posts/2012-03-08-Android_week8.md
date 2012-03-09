@@ -134,7 +134,17 @@ int nums[]=b.getIntArray("numbers");  //remem there is no default values
 * pp 123 in book alot of examples about transferring data
 
 <br/>
-* Transferring array list to an ac
+* Transferring array list to an activity
+`in.putIntegerArrayListExtra("allAges", ArrayList<Integer> al)`
+`in.putStringArrayListExtra("allNames", ArrayList<String> al)`
+* getting the data
+`Bundle b=getIntent().getExtra();`
+`b.getStringArrayListExtra("allnames"); //or b.getIntegerArrayListExtra("all Ages")`
+
+###Getting the current android version
+`Android.Build.VERSION.SDK`
+`Android.os.Build.VERSION.SDK.INT`
+`Android.os.Build.VERSION_CODES.FROYO //DONUT, CUPCAKE`
 
 
 

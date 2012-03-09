@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Android Week#3
+title: Android Week#3 Feb2, 2012
 ---
 
 {{ page.title }}
 ================
 
-<p class="meta">2 Feb 2011 - San Francisco</p>
+<p class="meta">2 Feb 2012 - San Francisco</p>
 
 * Any kind of string you create, should definitely in the string resource file. You should put it in .xml file
 * The advantage of using xml file in resource file is you don't have to recompile the data. If you want to change the string you just need to modify the xml file.

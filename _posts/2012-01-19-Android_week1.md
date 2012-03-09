@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Android Week#1
+title: Android Week#1 Jan19, 2012
 ---
 
 {{ page.title }}
 ================
 
-<p class="meta">26 Jan 2012 - San Francisco</p>
+<p class="meta">19 Jan 2012 - San Francisco</p>
 
 1.5 Cupcake - API Level 3
 1.6 Donut   - API Level 4

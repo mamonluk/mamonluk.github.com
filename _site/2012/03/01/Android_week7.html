@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Android Week#7 Mar1, 2012</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">mamonluk</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Android Week#7 Mar1, 2012</h1>
+
+<p class="meta">01 Mar 2011 - San Francisco</p>
+
+
+<ul>
+<li>making a toast</li>
+<li>private void mkToast()</li>
+<li>application context object
+if you are only dealing with 1 activity, it doesnt matter if you create application context object</li>
+<li>if you use the keyword "this" it may cause memory leak</li>
+<li>if you are dealing with multiple activity, hen you need to create application context object</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">mkToast</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">)</span>
+<span class="o">{</span>
+<span class="n">Context</span> <span class="n">con</span> <span class="o">=</span> <span class="n">getApplicationContext</span><span class="o">();</span> 
+<span class="c1">//this is a factory method, belongs to activity class</span>
+<span class="c1">//when you assign a factory method, you would think the object assign to it is a interface, i.e. Context con;</span>
+<span class="c1">//factory method means its gonna decide what object to create at runtime</span>
+
+<span class="n">Toast</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">text</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">)</span>   <span class="c1">//12 milliseconds</span>
+<span class="n">t</span><span class="o">.</span><span class="na">show</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<p>//toast show at the bottom of your phone</p>
+
+<ul>
+<li>you can set the layout for toast</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"> <span class="n">t</span><span class="o">.</span><span class="na">setGravity</span><span class="o">(</span><span class="kt">int</span> <span class="n">G</span><span class="o">,</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span>      
+    <span class="c1">//(0,0)------&gt;</span>
+           <span class="o">|</span> 
+           <span class="o">|</span>
+           <span class="o">|</span>
+        
+    <span class="n">t</span><span class="o">.</span><span class="na">setGravity</span><span class="o">(</span><span class="n">Graivity</span><span class="o">.</span><span class="na">TOP</span> <span class="o">|</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">LEFT</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">*</span><span class="n">Methods</span> <span class="k">for</span> <span class="n">taost</span>
+    <span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="na">cancel</span><span class="o">()</span>
+    <span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="na">getDuration</span><span class="o">();</span>
+    <span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="na">getGravity</span><span class="o">();</span>
+    <span class="o">=</span><span class="kt">int</span> <span class="n">getHorizontalMargin</span><span class="o">();</span>
+</code></pre>
+</div>
+
+
+<p></br></p>
+
+<ul>
+<li><p>Intent - is a mechanism that allows us to hook two or more activities</p>
+
+<pre><code>  -using intent to use alarm, event, call another activity, using intent to communicate background processes
+  -daemon are background processes
+  -two kinds of intent, internal and external
+  -there is an intent that let us work with map
+  -browse the internet using intent, call the phone, etc
+</code></pre></li>
+<li><p>Each activity has its own layout file</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Util</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">callWebBrowser</span><span class="o">()</span>  <span class="c1">//public void callWebBrowser(Activity activity) </span>
+                              <span class="c1">//then you don&#39;t need to extend Activity</span>
+<span class="o">{</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="o">)));</span>     
+    <span class="c1">//if you didn&#39;t extend it then you need to create an object of activity</span>
+    
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">callWebSearch</span><span class="o">()</span>
+<span class="o">{</span>
+ <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_WEB_SEARCH</span><span class="o">,</span> <span class="n">uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="o">)));</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">call</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_CALL</span><span class="o">,</span> <span class="n">uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;tel:415-392-7088&quot;</span><span class="o">)));</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">showMap</span><span class="o">(</span><span class="kt">double</span> <span class="n">lat</span><span class="o">,</span> <span class="kt">double</span> <span class="n">lon</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="n">startActivit</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">))</span>
+    <span class="n">uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;geo:&quot;</span> <span class="o">+</span> <span class="n">lat</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="n">lon</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">dial</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_DIAL</span><span class="o">));</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
+<br/>
+
+
+<ul>
+<li>debugging activity through Log</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+    <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">some_view</span><span class="o">)</span>
+    <span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">i</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;mytest&quot;</span><span class="o">,</span> <span class="s">&quot;no intent invoked me&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">{</span>
+</code></pre>
+</div>
+
+
+
+
+<br/>
+
+
+<ul>
+<li>Sample Code creating Activity</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kn">package</span> <span class="n">cs211d</span><span class="o">.</span><span class="na">demo</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">andriod.os.Bundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Content</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Button</span><span class="o">;</span>   <span class="c1">//when using toast need to import android.widget.Toast;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Screen1</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+        <span class="n">Button</span> <span class="n">b</span><span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btnClick</span><span class="o">);</span>
+    
+    <span class="n">b</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickLIstener</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">Context</span> <span class="n">con</span> <span class="o">=</span> <span class="n">getApplicationContext</span><span class="o">();</span>
+            <span class="n">Intent</span> <span class="n">i</span><span class="o">=</span><span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">screen2</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> 
+            <span class="c1">//Intent i=new Intent(this); </span>
+            <span class="c1">//this is not recommended when using multiple activity, this would create memory leak</span>
+            
+            <span class="n">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>   
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
+<br/>
+
+
+<h3>side note</h3>
+
+<p><LinearLayout ....></p>
+
+<pre><code>&lt;TextView 
+    ---
+    ---
+/&gt;
+&lt;TableLayout....&gt;
+    ---
+    ---
+&lt;/TableLayout&gt;
+</code></pre>
+
+<p></LinearLayout></p>
+
+<ul>
+<li>TableLayout by default is put side by side</li>
+<li>LinearLayout by default is vertical</li>
+<li><p>We can put nested layout to one another,,,,</p></li>
+<li><p>/res/main.xml</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="o">&lt;?</span><span class="n">xml</span> <span class="o">------?&gt;</span>
+<span class="o">&lt;</span><span class="n">LinearLayout</span> <span class="o">......</span>
+    <span class="nl">android:</span><span class="n">orientation</span><span class="o">=</span><span class="s">&quot;vertical&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;fill_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;fill_parent&quot;</span>
+    <span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">TextView</span> 
+    <span class="nl">android:</span> <span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;fill_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+    <span class="nl">android:</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;you are in 1st screen&quot;</span>
+    <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">Button</span>
+    <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@id/btnClick&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrape_content&quot;</span>
+    <span class="nl">android:</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;open new screen&quot;</span>
+    <span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">LinearLayout</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>/src/screen2.java</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Screen2</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+        <span class="n">Button</span> <span class="n">b</span><span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btnClick2</span><span class="o">);</span>
+    
+    <span class="n">b</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickLIstener</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">setResult</span><span class="o">(</span><span class="n">RESULT_OK</span><span class="o">);</span>
+            <span class="n">finish</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
+<br/>
+
+
+<h3>/AndroidManifext.xml</h3>
+
+<p><code>&lt;activity class=".Screen2" android:label="Screen2"&gt;</code>
+<code>&lt;/activity&gt;</code></p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>23 Feb 2012</span> &raquo; <a href="/2012/02/23/Android_week6.html">Android Week#6 Feb23, 2012</a></li>
+    
+      <li><span>16 Feb 2012</span> &raquo; <a href="/2012/02/16/Android_week5.html">Android Week#5 Feb16, 2012</a></li>
+    
+      <li><span>09 Feb 2012</span> &raquo; <a href="/2012/02/09/Android_week4.html">Android Week#4 Feb9, 2012</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        mamonluk<br />
+		website
+        
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="https://github.com/mamonluk">github.com/mamonluk</a><br />
+		<a href="http://whatsnerdy.com">whatsnerdy</a><br/>
+      </p>
+    </div>
+    
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+</body>
+</html>

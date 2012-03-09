@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Android Week#2
+title: Android Week#2 Jan26, 2012
 ---
 
 {{ page.title }}
 ================
 
-<p class="meta">22 Nov 2011 - San Francisco</p>
+<p class="meta">26 Jan 2012 - San Francisco</p>
 
 * 1.5 obsolete
 * 2.1 2.2 2.3 are good version
