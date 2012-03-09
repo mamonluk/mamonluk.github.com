@@ -9,7 +9,7 @@ title: Android Week#8 Mar8, 2012
 <p class="meta">08 Mar 2012 - San Francisco</p>
 
 ###Intents Components
-* Action,  Data, Extra data, class name
+* Action,Data, Extra data, class name
 	* class name can have two different approach
 		* call your class within another class
 		* call your class with another package
