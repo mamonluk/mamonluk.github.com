@@ -44,11 +44,11 @@ var WRInitTime=(new Date()).getTime();
   <h2>Related Posts</h2>
   <ul class="posts">
     
+      <li><span>08 Mar 2012</span> &raquo; <a href="/2012/03/08/Android_week8.html">Android Week#8 Mar8, 2012</a></li>
+    
       <li><span>01 Mar 2012</span> &raquo; <a href="/2012/03/01/Android_week7.html">Android Week#7 Mar1, 2012</a></li>
     
       <li><span>23 Feb 2012</span> &raquo; <a href="/2012/02/23/Android_week6.html">Android Week#6 Feb23, 2012</a></li>
-    
-      <li><span>16 Feb 2012</span> &raquo; <a href="/2012/02/16/Android_week5.html">Android Week#5 Feb16, 2012</a></li>
     
   </ul>
 </div>
@@ -93,7 +93,55 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 var pageTracker = _gat._getTracker("UA-6016902-1");
 pageTracker._trackPageview();
 </script>
-<!-- Google Analytics end -->
+
+
+<form name="jksearch" action="http://www.google.com/search" method="get" onSubmit="jksitesearch(this)">
+
+<p>Search JavaScript Kit:<br />
+<input id="hiddenquery" type="hidden" name="q" />
+<input name="qfront" type="text" style="width: 200px" value="navigator object" /> <input type="submit" value="Search" /><br />
+<div style="font: bold 11px Verdana;">Google:<input name="se" type="radio" checked>  Yahoo:<input name="se" type="radio">  MSN:<input name="se" type="radio">
+</div>
+
+<script type="text/javascript">
+
+// All-in-one Internal Site Search script- By JavaScriptKit.com (http://www.javascriptkit.com)
+// For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/
+// This notice must stay intact for use
+
+//Enter domain of site to search.
+var domainroot="www.javascriptkit.com"
+
+var searchaction=[ //form action for the 3 search engines
+"http://www.google.com/search",
+"http://search.yahoo.com/search",
+"http://search.msn.com/results.aspx"
+]
+
+var queryfieldname=["q","p","q"] //name of hidden query form for the 3 search engines
+
+function switchaction(cur, index){
+cur.form.action=searchaction[index]
+document.getElementById("hiddenquery").name=queryfieldname[index]
+}
+
+function jksitesearch(curobj){
+for (i=0; i< document.jksearch.se.length; i++){ //loop through radio to see which is checked
+if (document.jksearch.se[i].checked==true)
+switchaction(document.jksearch.se[i], i)
+}
+document.getElementById("hiddenquery").value="site:"+domainroot+" "+curobj.qfront.value
+}
+
+
+</script>
+
+</p>
+
+</form>
+
+<p style="font: normal 11px Arial">This free script provided by<br />
+<a href="http://www.javascriptkit.com">JavaScript Kit</a></p>
 
 </body>
 </html>

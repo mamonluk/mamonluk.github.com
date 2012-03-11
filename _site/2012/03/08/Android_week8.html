@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Android Week#8 Mar8, 2012</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">mamonluk</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Android Week#8 Mar8, 2012</h1>
+
+<p class="meta">08 Mar 2012 - San Francisco</p>
+
+
+<h3>Intents Components</h3>
+
+<ul>
+<li>Action,Data, Extra data, class name
+
+<ul>
+<li>class name can have two different approach
+
+<ul>
+<li>call your class within another class</li>
+<li>call your class with another package</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">call</span><span class="o">(</span><span class="n">Activity</span> <span class="n">a</span><span class="o">,</span> <span class="n">String</span> <span class="n">poneNo</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_CALL</span><span class="o">);</span>
+    <span class="n">i</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;tel:&quot;</span> <span class="o">+</span> <span class="n">phoneNo</span><span class="o">.));</span>
+    <span class="n">a</span><span class="o">.</span><span class="na">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+<span class="n">i</span><span class="o">.</span><span class="na">setComponent</span><span class="o">(</span><span class="k">new</span> <span class="n">ComponentName</span><span class="o">(</span><span class="s">&quot;com.android.contacts&quot;</span><span class="o">,</span> <span class="s">&quot;com.android.contacts.DialContactsEntryActivity&quot;</span><span class="o">));</span>
+                                  <span class="c1">//this is the package   //full qualified class name</span>
+<span class="c1">//setComponent - is a method that allows us to set what package to use</span>
+
+<span class="n">startActivity</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>   
+</code></pre>
+</div>
+
+
+<h3>side note</h3>
+
+<ul>
+<li>if you want to test if emulator is working or not</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="k">if</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">Environment</span><span class="o">.</span><span class="na">DeviceType</span> <span class="o">!=</span> <span class="n">DeviceType</span><span class="o">.</span><span class="na">Emulator</span><span class="o">);</span>
+<span class="o">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Emulator is not running&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>if you want to test if program is running on emulator or phone</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="k">if</span><span class="o">(</span><span class="s">&quot;google_sdk&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">Buid</span><span class="o">.</span><span class="na">PRODUCT</span><span class="o">))</span>
+<span class="o">{</span>
+    <span class="n">String</span> <span class="n">android_id</span> <span class="o">=</span> <span class="n">Secure</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">getContentResolver</span><span class="o">(),</span> <span class="n">Secure</span><span class="o">.</span><span class="na">ANDROID_ID</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">android_id</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">emulator</span><span class="o">...</span>
+    <span class="o">}</span>
+    <span class="k">else</span>
+    <span class="o">{</span>
+        <span class="n">device</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>another way of testing if it's running on the phone</li>
+</ul>
+
+
+<p><code>if("google_sdk".equals(Build.PRODUCT)) {   ------  }</code></p>
+
+<ul>
+<li>another way of testing if it's running on the phone</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmulator</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">return</span> <span class="n">Build</span><span class="o">.</span><span class="na">MANUFACTURER</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;unknown&quot;</span><span class="o">);</span>  <span class="c1">//</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>Running a script to check if emulator is running</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="n">a</span><span class="o">=</span><span class="n">$</span><span class="o">(</span><span class="n">adb</span> <span class="n">devices</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">emulator</span><span class="o">)</span>
+<span class="k">if</span><span class="o">[</span> <span class="o">-</span><span class="n">z</span> <span class="s">&quot;$a&quot;</span> <span class="o">];</span> <span class="n">then</span>
+    <span class="n">echo</span> <span class="s">&quot;no emulator up &amp; running&quot;</span>
+    <span class="n">exit</span> <span class="mi">1</span>
+<span class="n">fi</span>
+<span class="n">b</span><span class="o">=</span><span class="n">$</span><span class="o">(</span><span class="n">echo</span> <span class="n">$a</span> <span class="o">|</span> <span class="n">grep</span> <span class="s">&quot;offline&quot;</span><span class="o">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;$b&quot;</span> <span class="o">];</span>
+    <span class="n">echo</span> <span class="s">&quot;no emulator running&quot;</span>
+    <span class="n">exit</span> <span class="mi">2</span>
+<span class="n">fi</span>
+</code></pre>
+</div>
+
+
+<h3>Creating Extra data</h3>
+
+<div class="highlight"><pre><code class="java"><span class="n">Intent</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">HelpActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">in</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;com.cs211d.chippy.LEVEL&quot;</span><span class="o">,</span> <span class="mi">23</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+<span class="c1">//         key             value</span>
+<span class="c1">//putExtra(String name, boolean value)</span>
+                        <span class="kt">int</span> 
+                        <span class="kt">double</span>
+                        <span class="n">String</span>
+                        <span class="kt">float</span>
+                        <span class="kt">int</span> <span class="o">[]</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>Retrieving data from the other acticity</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="n">Intent</span> <span class="n">in</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">();</span>
+<span class="kt">int</span> <span class="n">helpLevel</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="s">&quot;com.cs211d.chippy.Level&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+                                <span class="c1">//the 1 is the default value</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li><p>How to know which Activity sent the data
+<code>this.getIntent.getData</code> -return the uri of activity who sent the data i.e. screen1.class returns null if data is empty</p></li>
+<li><p>Another way of sending data to an intent</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="n">Bundle</span> <span class="n">b</span><span class="o">=</span> <span class="k">new</span> <span class="n">Bundle</span><span class="o">()</span>
+<span class="n">b</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&quot;Name&quot;</span><span class="o">,</span> <span class="s">&quot;John&quot;</span><span class="o">);</span>  <span class="c1">//b.putString(&quot;Name&quot;, &quot;82&quot;);</span>
+<span class="n">in</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+<span class="c1">//in is object of Intent</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>Transferring large amount of data to an activity</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kt">int</span> <span class="n">nums</span><span class="o">[]={</span><span class="mi">3</span><span class="o">,</span><span class="mi">9</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">17</span><span class="o">};</span>
+<span class="n">Intent</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">B</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">in</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;numbers&quot;</span><span class="o">,</span> <span class="n">nums</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>Receiving the large data from an activity</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="n">Bundle</span> <span class="n">b</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtra</span><span class="o">();</span>
+<span class="kt">int</span> <span class="n">nums</span><span class="o">[]=</span><span class="n">b</span><span class="o">.</span><span class="na">getIntArray</span><span class="o">(</span><span class="s">&quot;numbers&quot;</span><span class="o">);</span>  <span class="c1">//remem there is no default values</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>pp 123 in book alot of examples about transferring data</li>
+</ul>
+
+
+<br/>
+
+
+<ul>
+<li>Transferring array list to an activity
+<code>in.putIntegerArrayListExtra("allAges", ArrayList&lt;Integer&gt; al)</code>
+<code>in.putStringArrayListExtra("allNames", ArrayList&lt;String&gt; al)</code></li>
+<li>getting the data
+<code>Bundle b=getIntent().getExtra();</code>
+<code>b.getStringArrayListExtra("allnames"); //or b.getIntegerArrayListExtra("all Ages")</code></li>
+</ul>
+
+
+<h3>Getting the current android version</h3>
+
+<p><code>Android.Build.VERSION.SDK</code>
+<code>Android.os.Build.VERSION.SDK.INT</code>
+<code>Android.os.Build.VERSION_CODES.FROYO //DONUT, CUPCAKE</code></p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>01 Mar 2012</span> &raquo; <a href="/2012/03/01/Android_week7.html">Android Week#7 Mar1, 2012</a></li>
+    
+      <li><span>23 Feb 2012</span> &raquo; <a href="/2012/02/23/Android_week6.html">Android Week#6 Feb23, 2012</a></li>
+    
+      <li><span>16 Feb 2012</span> &raquo; <a href="/2012/02/16/Android_week5.html">Android Week#5 Feb16, 2012</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        mamonluk<br />
+		website
+        
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="https://github.com/mamonluk">github.com/mamonluk</a><br />
+		<a href="http://whatsnerdy.com">whatsnerdy</a><br/>
+      </p>
+    </div>
+    
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+
+
+<form name="jksearch" action="http://www.google.com/search" method="get" onSubmit="jksitesearch(this)">
+
+<p>Search JavaScript Kit:<br />
+<input id="hiddenquery" type="hidden" name="q" />
+<input name="qfront" type="text" style="width: 200px" value="navigator object" /> <input type="submit" value="Search" /><br />
+<div style="font: bold 11px Verdana;">Google:<input name="se" type="radio" checked>  Yahoo:<input name="se" type="radio">  MSN:<input name="se" type="radio">
+</div>
+
+<script type="text/javascript">
+
+// All-in-one Internal Site Search script- By JavaScriptKit.com (http://www.javascriptkit.com)
+// For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/
+// This notice must stay intact for use
+
+//Enter domain of site to search.
+var domainroot="www.javascriptkit.com"
+
+var searchaction=[ //form action for the 3 search engines
+"http://www.google.com/search",
+"http://search.yahoo.com/search",
+"http://search.msn.com/results.aspx"
+]
+
+var queryfieldname=["q","p","q"] //name of hidden query form for the 3 search engines
+
+function switchaction(cur, index){
+cur.form.action=searchaction[index]
+document.getElementById("hiddenquery").name=queryfieldname[index]
+}
+
+function jksitesearch(curobj){
+for (i=0; i< document.jksearch.se.length; i++){ //loop through radio to see which is checked
+if (document.jksearch.se[i].checked==true)
+switchaction(document.jksearch.se[i], i)
+}
+document.getElementById("hiddenquery").value="site:"+domainroot+" "+curobj.qfront.value
+}
+
+
+</script>
+
+</p>
+
+</form>
+
+<p style="font: normal 11px Arial">This free script provided by<br />
+<a href="http://www.javascriptkit.com">JavaScript Kit</a></p>
+
+</body>
+</html>
