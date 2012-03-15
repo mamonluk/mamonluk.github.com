@@ -98,6 +98,8 @@ public void dial()
 }
 {% endhighlight %}
 
+* Remember to add this to Androidmanifest file for CALLING PHONE `<uses-permission android:name="android.permission.CALL_PHONE" />
+
 <br/>
 * debugging activity through Log
 
