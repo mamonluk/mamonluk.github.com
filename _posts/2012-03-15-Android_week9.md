@@ -25,6 +25,7 @@ title: Android Week#9 Mar15, 2012
 <br/>
 ###Populating data in the sharedPreference file
 * `SharedPreferences.Editor ed = sp.edit();`
+
   `ed.putString("myCar", "Honda")`
   `ed.putInt("myAge", 82);`
   //diff variation i.e. putDouble, putLong
