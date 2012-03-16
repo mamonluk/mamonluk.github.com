@@ -31,4 +31,7 @@ title: Android Week#9 Mar15, 2012
   //diff variation i.e. putDouble, putLong
   `ed.commit();`  //ed.apply(); this is faster in terms of speed, this is only available only after version 2.7
 
+* `ed.clear` //remove everything from the sharedPreference
+* `ed.remove(String key);` //remove specific key in sharedPreference
+
 
