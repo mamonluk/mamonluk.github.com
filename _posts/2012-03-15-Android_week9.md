@@ -45,4 +45,106 @@ if city is given, name the state, if state is given, name the city
 * `boolean sp.contain(String key);`
 * `Map<String, ?> getAll()`
 
+###Different types of storage
+* Internal Storage - disadvantage of using this is it is save in memory so you cannot transfer it
+* External Sotrage SD card -
+* sqlite 
+* Network Connection (Cloud)
+
+###Saving data to to Internal Storage
+{% highlight java %}
+String str="this line will be saved internally";
+FileOutputStream fos = openFileOutput("myFile", Context.MODE_PRIVATE);
+													 //.MODE_APPEND
+													 //.MODE_WORLD_WRITABLE
+fos.write(str.getBytes());
+fos.close();
+* Make sure to import java.io.*; and import android.content.SharedPreferences;
+* Entire i/o classes in java is included in android.
+{% endhighlight %}
+{% highlight java %}
+String str="this line will be saved internally";
+FileOutputStream fos = openFileOutput("myFile", Context.MODE_PRIVATE);
+													 //.MODE_APPEND
+													 //.MODE_WORLD_WRITABLE
+PrintWriter pw = new PrintWriter(fos);
+fos.close();
+{% endhighlight %}
+
+
+###Side Note
+* There are alot of classes in java for i/o but you only need to use two classes `PrintWriter` and `Scanner` 
+	*`PrintWriter` - this is for output, can be used for println, print, printf
+	*`Scanner` - this is for input
+	
+
+###Retrieving data from Internal Storage
+{% highlight java %}
+FileInputStream fis = openFileInput("myFile")
+Scanner sc=new Scanner(fis);
+while(sc.hasNext())
+{
+	String line = sc.nextLine();
+	----
+	----
+}
+fis.close();
+{% endhighlight %}
+
+
+###Checking if SD card is available or not
+boolean storageAvailable = false;
+boolean storageWritable = false;
+
+String state = Environment.getExternalStorage.state();
+if(Environment.MEDIA_MOUNTED.equals(state))
+{
+	storageAvailable = StorageWritable =true;
+}
+else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+{
+	storageAvailable=true;
+	storageWritable=false;
+}
+else
+	storageAvailable=storageWritable=false;
+	
+###Saving data to External Storage SD Card
+* MODE_WORLD_READABLE - make sure this is the param
+* You need to make sure if SD card is available or not 
+
+{% highlight java%}
+String str="This line will be saved in the SD Card"
+try{
+	File sdCard = Environment.getExternalStorage.Directory();
+	File dir = new File(sdCard, getAbsolutePath() + "/MyFile");
+	dir.mkdirs();   //going inside the directory
+	File f = new File(dir, "textFile.txt");
+	PrintWriter pw = new PrintWriter(f);
+	pw.println(str);
+	pw.flush();
+	pw.close();
+}catch (IOException e) {  .....  }
+
+###Load data from SD Card
+{% highlight java %}
+File sdCard = Environment.getExternalStorageDirectory();
+File dir = new File(sdCard.getAbsolutPath() + "/MyFile");
+File f = new File(dir, "textFile.txt");  //you cannot use scanner directly here bec. Scanner assumes you are going to parse it
+Scanner sc = new Scanner(f);
+while(sc.hasNext())
+{
+	String line = sc.nextLine();  
+	----
+	----
+}
+{% endhighlight %}
+
+
+
+
+	
+
+
+
 
