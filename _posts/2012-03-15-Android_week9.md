@@ -14,7 +14,6 @@ A game that test your knowledge of states capitals
 if city is given, name the state, if state is given, name the city
 
 
-
 * `System.setProperty("Font", "Helvetica")`
 * `String System.getProperty("Font", "SansSerif")  //SansSerif is the default`
 
