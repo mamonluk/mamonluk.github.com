@@ -125,7 +125,7 @@ try{
 	pw.close();
 }catch (IOException e) {  .....  }
 
-###Load data from SD Card
+###Load data from SD Card..
 {% highlight java %}
 File sdCard = Environment.getExternalStorageDirectory();
 File dir = new File(sdCard.getAbsolutPath() + "/MyFile");
