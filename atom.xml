@@ -4,14 +4,14 @@ layout: nil
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
- <title>Tom Preston-Werner</title>
+ <title>mamonluk</title>
  <link href="http://tom.preston-werner.com/atom.xml" rel="self"/>
  <link href="http://tom.preston-werner.com/"/>
  <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>http://tom.preston-werner.com/</id>
+ <id>http://mamonluk.github.com/</id>
  <author>
-   <name>Tom Preston-Werner</name>
-   <email>tom@mojombo.com</email>
+   <name>mamonluk</name>
+   <email>mamonluk7@gmail.com</email>
  </author>
 
  {% for post in site.posts %}
