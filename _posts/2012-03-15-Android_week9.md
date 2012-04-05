@@ -92,10 +92,13 @@ fis.close();
 
 
 ###Checking if SD card is available or not
+{% highlight java %}
 boolean storageAvailable = false;
+
 boolean storageWritable = false;
 
 String state = Environment.getExternalStorage.state();
+
 if(Environment.MEDIA_MOUNTED.equals(state))
 {
 	storageAvailable = StorageWritable =true;
@@ -107,6 +110,7 @@ else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
 }
 else
 	storageAvailable=storageWritable=false;
+{% endhighlight %}
 	
 ###Saving data to External Storage SD Card
 * MODE_WORLD_READABLE - make sure this is the param
