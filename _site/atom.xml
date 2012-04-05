@@ -4,13 +4,206 @@
  <title>mamonluk</title>
  <link href="http://tom.preston-werner.com/atom.xml" rel="self"/>
  <link href="http://tom.preston-werner.com/"/>
- <updated>2012-03-10T22:01:04-08:00</updated>
+ <updated>2012-04-05T12:09:14-07:00</updated>
  <id>http://mamonluk.github.com/</id>
  <author>
    <name>mamonluk</name>
    <email>mamonluk7@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Android Week#9 Mar15, 2012</title>
+   <link href="http://tom.preston-werner.com/2012/03/15/Android_week9.html"/>
+   <updated>2012-03-15T00:00:00-07:00</updated>
+   <id>http://tom.preston-werner.com/2012/03/15/Android_week9</id>
+   <content type="html">&lt;h1&gt;Android Week#9 Mar15, 2012&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;15 Mar 2012 - San Francisco&lt;/p&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;hw for next week
+A simple program. No layout defined ... design your own
+A game that test your knowledge of states capitals
+if city is given, name the state, if state is given, name the city&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;System.setProperty(&quot;Font&quot;, &quot;Helvetica&quot;)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;String System.getProperty(&quot;Font&quot;, &quot;SansSerif&quot;)  //SansSerif is the default&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Google has made another preference which is called shared preferences&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SharedPreferences sp = getSharedPreferences(&quot;myfile&quot;, 0);&lt;/code&gt;
+// data file will be saved in this file the parameter 0 or MODE_PRIVATE means, the file is only accessible between the activities in your project.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;SharedPreference sp = getPreferences(MODE_PRIVATE);
+//SharedPreference is an interface and its using factory method&lt;br/&gt;
+//the disadvantage of using this is doesnt save it to a file but instead memory&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;String myFont = sp.getString(&quot;Font&quot;, &quot;xxx&quot;)&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;//first param is the name of preference to be return, second param is the value to return if preference does not exists&lt;/li&gt;
+&lt;li&gt;//multiple variation getInteger, getDouble, getLong, etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;br/&gt;
+
+
+&lt;h3&gt;Populating data in the sharedPreference file&lt;/h3&gt;
+
+&lt;p&gt; &lt;code&gt;SharedPreferences.Editor ed = sp.edit();&lt;/code&gt;
+  &lt;code&gt;ed.putString(&quot;myCar&quot;, &quot;Honda&quot;)&lt;/code&gt;
+  &lt;code&gt;ed.putInt(&quot;myAge&quot;, 82);&lt;/code&gt;
+  //diff variation i.e. putDouble, putLong
+  &lt;code&gt;ed.commit();&lt;/code&gt;&lt;br/&gt;
+  //ed.apply(); this is faster in terms of speed, this is only available only after version 2.7&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ed.clear&lt;/code&gt; //remove everything from the sharedPreference&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ed.remove(String key);&lt;/code&gt; //remove specific key in sharedPreference&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Methods for SharedPreferences&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;boolean sp.contain(String key);&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Map&amp;lt;String, ?&amp;gt; getAll()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Different types of storage&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Internal Storage - disadvantage of using this is it is save in memory so you cannot transfer it&lt;/li&gt;
+&lt;li&gt;External Sotrage SD card -&lt;/li&gt;
+&lt;li&gt;sqlite&lt;/li&gt;
+&lt;li&gt;Network Connection (Cloud)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Saving data to to Internal Storage&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;this line will be saved internally&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;FileOutputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openFileOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;myFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MODE_PRIVATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+                                                     &lt;span class=&quot;c1&quot;&gt;//.MODE_APPEND&lt;/span&gt;
+                                                     &lt;span class=&quot;c1&quot;&gt;//.MODE_WORLD_WRITABLE&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Make&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sure&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.io.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.content.SharedPreferences&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Entire&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;included&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;this line will be saved internally&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;FileOutputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openFileOutput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;myFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MODE_PRIVATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+                                                     &lt;span class=&quot;c1&quot;&gt;//.MODE_APPEND&lt;/span&gt;
+                                                     &lt;span class=&quot;c1&quot;&gt;//.MODE_WORLD_WRITABLE&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;PrintWriter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PrintWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fos&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h3&gt;Side Note&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;There are alot of classes in java for i/o but you only need to use two classes &lt;code&gt;PrintWriter&lt;/code&gt; and &lt;code&gt;Scanner&lt;/code&gt;
+  &lt;em&gt;&lt;code&gt;PrintWriter&lt;/code&gt; - this is for output, can be used for println, print, printf
+  &lt;/em&gt;&lt;code&gt;Scanner&lt;/code&gt; - this is for input&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Retrieving data from Internal Storage&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;FileInputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;openFileInput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;myFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;nextLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h3&gt;Checking if SD card is available or not&lt;/h3&gt;
+
+&lt;p&gt;boolean storageAvailable = false;
+boolean storageWritable = false;&lt;/p&gt;
+
+&lt;p&gt;String state = Environment.getExternalStorage.state();
+if(Environment.MEDIA_MOUNTED.equals(state))
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;storageAvailable = StorageWritable =true;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}
+else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;storageAvailable=true;
+storageWritable=false;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}
+else&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;storageAvailable=storageWritable=false;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Saving data to External Storage SD Card&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MODE_WORLD_READABLE - make sure this is the param&lt;/li&gt;
+&lt;li&gt;You need to make sure if SD card is available or not&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;This line will be saved in the SD Card&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sdCard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getExternalStorage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getAbsolutePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;/MyFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mkdirs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//going inside the directory&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;textFile.txt&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PrintWriter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PrintWriter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;.....&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;h3&gt;Load data from SD Card..&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sdCard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getExternalStorageDirectory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sdCard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getAbsolutPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;/MyFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;textFile.txt&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//you cannot use scanner directly here bec. Scanner assumes you are going to parse it&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;nextLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+</content>
+ </entry>
  
  <entry>
    <title>Android Week#8 Mar8, 2012</title>
@@ -342,6 +535,9 @@ if you are only dealing with 1 activity, it doesnt matter if you create applicat
 &lt;/div&gt;
 
 
+&lt;ul&gt;
+&lt;li&gt;Remember to add this to Androidmanifest file for CALLING PHONE &lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.CALL_PHONE&quot; /&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 
 &lt;br/&gt;
