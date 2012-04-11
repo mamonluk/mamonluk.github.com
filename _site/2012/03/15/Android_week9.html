@@ -178,29 +178,26 @@ if city is given, name the state, if state is given, name the city</p></li>
 
 <h3>Checking if SD card is available or not</h3>
 
-<p>boolean storageAvailable = false;
-boolean storageWritable = false;</p>
+<div class="highlight"><pre><code class="java"><span class="kt">boolean</span> <span class="n">storageAvailable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 
-<p>String state = Environment.getExternalStorage.state();
-if(Environment.MEDIA_MOUNTED.equals(state))
-{</p>
+<span class="kt">boolean</span> <span class="n">storageWritable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 
-<pre><code>storageAvailable = StorageWritable =true;
+<span class="n">String</span> <span class="n">state</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorage</span><span class="o">.</span><span class="na">state</span><span class="o">();</span>
+
+<span class="k">if</span><span class="o">(</span><span class="n">Environment</span><span class="o">.</span><span class="na">MEDIA_MOUNTED</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">state</span><span class="o">))</span>
+<span class="o">{</span>
+    <span class="n">storageAvailable</span> <span class="o">=</span> <span class="n">StorageWritable</span> <span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">Environment</span><span class="o">.</span><span class="na">MEDIA_MOUNTED_READ_ONLY</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">state</span><span class="o">))</span>
+<span class="o">{</span>
+    <span class="n">storageAvailable</span><span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+    <span class="n">storageWritable</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="k">else</span>
+    <span class="n">storageAvailable</span><span class="o">=</span><span class="n">storageWritable</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
 </code></pre>
+</div>
 
-<p>}
-else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
-{</p>
-
-<pre><code>storageAvailable=true;
-storageWritable=false;
-</code></pre>
-
-<p>}
-else</p>
-
-<pre><code>storageAvailable=storageWritable=false;
-</code></pre>
 
 <h3>Saving data to External Storage SD Card</h3>
 
@@ -249,11 +246,11 @@ else</p>
   <h2>Related Posts</h2>
   <ul class="posts">
     
+      <li><span>05 Apr 2012</span> &raquo; <a href="/2012/04/05/Android_week10.html">Android Week#10 Apr05, 2012</a></li>
+    
       <li><span>08 Mar 2012</span> &raquo; <a href="/2012/03/08/Android_week8.html">Android Week#8 Mar8, 2012</a></li>
     
       <li><span>01 Mar 2012</span> &raquo; <a href="/2012/03/01/Android_week7.html">Android Week#7 Mar1, 2012</a></li>
-    
-      <li><span>23 Feb 2012</span> &raquo; <a href="/2012/02/23/Android_week6.html">Android Week#6 Feb23, 2012</a></li>
     
   </ul>
 </div>
