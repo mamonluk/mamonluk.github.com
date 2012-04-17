@@ -140,6 +140,27 @@ some manufacturers have created a directory called Camera (this is bad!) in the 
 `.import file.csv test2`
 `sqlite3 mydb .dump > test.sql`
 
+* How to import DB
+`sqlite3 -init test.sql mydb2 .exit` this will import test.sql to mydb2
+`sqlite3 mydb2 < test.sql` - will import test.sql to mydb2
+
+###How to handle sqlite in android
+<% highlight java%>
+adb shell
+ls /system/bin						#will give you all the shell command available for android	
+ls /data/data						#you will see all of your database that you have
+ls /data/data/com.androiders.contacts/databases			#you will see contacts.db
+ls -R /data/data/*/databases							#will give you list ilke alarms.db, contacts.db, downloads.db, internal.db, settings.db, mmssms.db, telephony.db
+<% endhighlight %>
+
+###How to loop up DB tables
+`sqlite3 /data/data/com.androiders.contacts/databases/contacts.db`
+`sqlite> .tables`
+###Want to transfer DB to your local hard disk
+`adb pull /data/data/com.androiders.contacts/databases/contacts.db contacts.db`
+
+###Next week - create database, tables, populate, run query
+
 
 
 
