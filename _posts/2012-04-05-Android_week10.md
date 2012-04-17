@@ -185,5 +185,5 @@ public class MainActivity extends Activity
 	* When you press phone button onPause(), onStop()
 	* then press back button onRestart(), onStart(), onResume().
  
- <a href="http://imgur.com/7xRHB"><img src="http://i.imgur.com/7xRHB.jpg" alt="" title="Hosted by imgur.com" /></a>
+<a href="http://imgur.com/iLKaN"><img src="http://i.imgur.com/iLKaN.jpg" alt="" title="Hosted by imgur.com" /></a>
 
