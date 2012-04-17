@@ -184,4 +184,6 @@ public class MainActivity extends Activity
 	* When you click Home button and hold for couple of seconds onCreate(), onStart(), onResume().
 	* When you press phone button onPause(), onStop()
 	* then press back button onRestart(), onStart(), onResume().
+ 
+ <a href="http://imgur.com/7xRHB"><img src="http://i.imgur.com/7xRHB.jpg" alt="" title="Hosted by imgur.com" /></a>
 
