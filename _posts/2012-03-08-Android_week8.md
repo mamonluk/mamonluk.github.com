@@ -98,6 +98,11 @@ startActivity(in);
 					    float
 					    int []
 {% endhighlight %}
+* You need to add this in AndroidManifest.xml
+{ % highlight java %}
+<activity android:name=".gameActivity"></activity>
+{ % endhighlight %}
+
 * Retrieving data from the other acticity
 {% highlight java %}
 Intent in = getIntent();
