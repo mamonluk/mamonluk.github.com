@@ -4,13 +4,198 @@
  <title>mamonluk</title>
  <link href="http://tom.preston-werner.com/atom.xml" rel="self"/>
  <link href="http://tom.preston-werner.com/"/>
- <updated>2012-04-05T23:58:12-07:00</updated>
+ <updated>2012-04-26T12:29:23-07:00</updated>
  <id>http://mamonluk.github.com/</id>
  <author>
    <name>mamonluk</name>
    <email>mamonluk7@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Android Week#11 Apr12, 2012</title>
+   <link href="http://tom.preston-werner.com/2012/04/12/Android_week11.html"/>
+   <updated>2012-04-12T00:00:00-07:00</updated>
+   <id>http://tom.preston-werner.com/2012/04/12/Android_week11</id>
+   <content type="html">&lt;h1&gt;Android Week#11 Apr12, 2012&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;12 Apr 2012 - San Francisco&lt;/p&gt;
+
+
+&lt;h3&gt;Side Note&lt;/h3&gt;
+
+&lt;p&gt;Scanner class has nice method called &quot;skip&quot; which allows you to skip over 0 or more lines to avoid lines with the supplied regex&lt;/p&gt;
+
+&lt;p&gt;runtime class lets you &quot;push&quot; automatically.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3&gt;SD Card&lt;/h3&gt;
+
+&lt;p&gt;sd cards were originally designed for handling music,movies,animation,photos etc.
+there is a utility is the sdk calld: mksdcard&lt;/p&gt;
+
+&lt;p&gt;this is for manually creating the sdcard.&lt;/p&gt;
+
+&lt;p&gt;first create a directory and put the sd card into it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   cd /android              (this is where you sdk is)
+   mkdir sdcard
+   mksdcard 512M /android/sdcard/sdcard.img
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;( ^ size (no less than 8 mb! can be Ko r M, no (G!)), path (include .img                           extension!),&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;emulator -avd em22 -sdcard /android/sdcard/sdcard.img&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;to push into it:
+&lt;code&gt;adb push /tmp/myfile /mnt/sdcard/myfile&lt;/code&gt;
+(android version less than 2.2 there was no /mnt/ )&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;what is inside the sdcard?
+dcim    (subdirectory: digitial camera image directory)
+standard directory. all manufacturers of cameras for devices, should follow this.
+This directory is in the root of your sdcard!
+it has one or more subdirectories, and their names should follow certain rules:
+it should be 8 characters long, 123ABCDE (first 3 characters should be numeric, followed by 5 uppercase letters)
+some manufacturers have created a directory called Camera (this is bad!) in the emulator there is a directory instead dcim called 100ANDRO. There is no method in java telling us where camera pictures are. :(&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;google has some remedies, but they are not 100% elegent.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;use this method when working with SDCard:
+&amp;lt;% highlight java %&gt;
+File Environment.getExternalStorageDirectory()&lt;/li&gt;
+&lt;li&gt;directories for certain data, use these constants:
+DIRECTORY_ALARMS (audio alarm files go here)
+DIRECTORY_DCIM (all camera pictures go here)
+DIRECTORY_DOWNLOADS (items user has dled)
+DIRECTORY_MOVIES (movie files)
+DIRECTORY_MUSIC (all music files)
+DIRECTORY_NOTIFICATIONS (audio files for notifcations)
+DIRECTORY_PICTURES (all image files, inside DCIM)
+DIRECTORY_PODCASTS (all radioshows etc)
+DIRECTORY_RINGTONES (ring tones for the phone)
+&amp;lt;% endhighlight %&gt;
+example:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;code&gt;File f = new File(Environment.DIRECTORY_MUSIC);&lt;/code&gt; - will give you complete path&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;these do not exisit on emulator! only actual device! on emulator                                      use these directories:
+mnt/sdcard/Alarms
+mnt/sdcard/DCIM
+mnt/sdcard/Download (not plural!)
+mnt/sdcard/Movies
+mnt/sdcard/Music
+mnt/sdcard/Notifications
+mnt/sdcard/Pictures
+mnt/sdcard/Podcasts
+mnt/sdcard/Ringtones&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Now to locate the directories in your program:
+&lt;code&gt;File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;when adding a file to the sdcard (v1.6 and up) very likely youll get error message saying you cannot write into sdcard. you need to add a permission to the AndroidManifest.xml permission : add to the last part of the xml file:
+&lt;code&gt;&amp;lt;user-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&amp;gt;&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;there are many permissions like this, that you will need to use in the future. abbas adds all of them (7-8 of them) into the AndroidManifest file, whether he uses them or not. just put them in there to be safe. one after the other.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.READ_CONTACTS&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.WRITE_CONTACTS&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.READ_CALENDAR&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.WRITE_CALENDAR&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.RECORD_AUDIO&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.BATTERY_STATS&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;user-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the best place to put these in the AndroidManifest.xml file is under the closing application tag
+&lt;/application&gt;
+&lt;put permissions here&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;SQLite&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Has two different mode name &lt;code&gt;shell mode&lt;/code&gt; and &lt;code&gt;command line&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;SQlite commands start with &lt;code&gt;.&lt;/code&gt; i.e. &lt;code&gt;.help&lt;/code&gt; &lt;code&gt;.tables&lt;/code&gt; &lt;code&gt;.separator&lt;/code&gt; &lt;code&gt;.exit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;How to start SQLite3 &lt;code&gt;sqlite3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Lets create a database &lt;code&gt;sqlite3 mydb&lt;/code&gt; this will go to interactive
+&lt;code&gt;sqlite&amp;gt; create table test(id integer primary key auto increment, name text);&lt;/code&gt;
+&lt;code&gt;sqlite&amp;gt; insert into test (name) values ('Alex');&lt;/code&gt;
+&lt;code&gt;sqlite&amp;gt; insert into test (name) values ('John');&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;make sure you add auto increment if you want the primary key to be automatically incremented&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;or you can do this too
+&lt;code&gt;sqlite&amp;gt; insert into test (name) values ('Alex'),('John');&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Configuration settings of SQLite&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.mode column&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.headers on&lt;/code&gt;    //put the headers on, the name of each column&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.show&lt;/code&gt;   //gives you internal settings of sqlite&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;.prompt sqlite&amp;gt;&amp;gt;&lt;/code&gt; //will change the default prompt to sqlite&gt;&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Example SQL Query&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;select * from test;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;select count(*) from test;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;last_insert_rowid()` - remember do not use this to get the number of rows in your table, cause the primary key will be random unless you do auto increment&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;How to create csv file(csv file will put output with , as separator)
+&lt;code&gt;.output file.csv&lt;/code&gt;
+&lt;code&gt;.separator ,&lt;/code&gt;
+&lt;code&gt;select * from test;&lt;/code&gt;
+&lt;code&gt;.output stdout&lt;/code&gt;
+//the example output will be &lt;code&gt;1,Alex, 2,John,3,David&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;code&gt;.output file.csv&lt;/code&gt;
+&lt;code&gt;.mode csv&lt;/code&gt;
+&lt;code&gt;select * from test;&lt;/code&gt;
+&lt;code&gt;.output stdout&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;How to transfer the table
+&lt;code&gt;create table test2(id integer primary key, name test);&lt;/code&gt;
+&lt;code&gt;.import file.csv test2&lt;/code&gt;
+&lt;code&gt;sqlite3 mydb .dump &amp;gt; test.sql&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;How to import DB
+&lt;code&gt;sqlite3 -init test.sql mydb2 .exit&lt;/code&gt; this will import test.sql to mydb2
+&lt;code&gt;sqlite3 mydb2 &amp;lt; test.sql&lt;/code&gt; - will import test.sql to mydb2&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;How to handle sqlite in android&lt;/h3&gt;
+
+&lt;p&gt;&amp;lt;% highlight java%&gt;
+adb shell
+ls /system/bin                      #will give you all the shell command available for android&lt;br/&gt;
+ls /data/data                       #you will see all of your database that you have
+ls /data/data/com.androiders.contacts/databases         #you will see contacts.db
+ls -R /data/data/*/databases                            #will give you list ilke alarms.db, contacts.db, downloads.db, internal.db, settings.db, mmssms.db, telephony.db
+&amp;lt;% endhighlight %&gt;&lt;/p&gt;
+
+&lt;h3&gt;How to loop up DB tables&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;sqlite3 /data/data/com.androiders.contacts/databases/contacts.db&lt;/code&gt;
+&lt;code&gt;sqlite&amp;gt; .tables&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;Want to transfer DB to your local hard disk&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;adb pull /data/data/com.androiders.contacts/databases/contacts.db contacts.db&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;Next week - create database, tables, populate, run query&lt;/h3&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Android Week#10 Apr05, 2012</title>
@@ -228,6 +413,8 @@ Ans: All application have public key and date limitation. Inside your .apk file 
 &lt;/li&gt;
 &lt;/ul&gt;
 
+
+&lt;p&gt;&lt;a href=&quot;http://imgur.com/iLKaN&quot;&gt;&lt;img src=&quot;http://i.imgur.com/iLKaN.jpg&quot; alt=&quot;&quot; title=&quot;Hosted by imgur.com&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -553,6 +740,16 @@ if city is given, name the state, if state is given, name the city&lt;/p&gt;&lt;
                         &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;
                         &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;
                         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;You need to add this in AndroidManifest.xml&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;android:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.gameActivity&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
