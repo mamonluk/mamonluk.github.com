@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Android Week#12 Apr12, 2012</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+
+
+
+<script language="JavaScript"> 
+<!-- Original by http://javascript.internet.com More javascripts http://www.hypergurl.com 
+--> var NS4 = (document.layers); // Which browser? var IE4 = (document.all); 
+var win = window; // window to search. var n = 0; function findInPage(str) { var 
+txt, i, found; if (str == "") return false; // Find next occurance of 
+the given string on the page, wrap around to the // start of the page if necessary. 
+if (NS4) { // Look for match starting at the current point. If not found, rewind 
+// back to the first match. if (!win.find(str)) while(win.find(str, false, true)) 
+n++; else n++; // If not found in either direction, give message. if (n == 0) 
+alert("Not found."); } if (IE4) { txt = win.document.body.createTextRange(); 
+// Find the nth match from the top of the page. for (i = 0; i <= n && 
+(found = txt.findText(str)) != false; i++) { txt.moveStart("character", 
+1); txt.moveEnd("textedit"); } // If found, mark it and scroll it into 
+view. if (found) { txt.moveStart("character", -1); txt.findText(str); 
+txt.select(); txt.scrollIntoView(); n++; } // Otherwise, start over at the top 
+of the page and find first match. else { if (n > 0) { n = 0; findInPage(str); 
+} // Not found anywhere, give message. else alert("Not found."); } } 
+return false; } </script>
+
+
+
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">mamonluk</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Android Week#12 Apr12, 2012</h1>
+
+<p class="meta">19 Apr 2012 - San Francisco</p>
+
+
+<h3>Homework</h3>
+
+<p>Modify the State Capitals game to:</p>
+
+<p>Create a database, Populate a table with the state and capital information
+use a select statement to determine whether the answer was correct or not
+Due by the end of the semester, though there may be additional extra credit homework available.</p>
+
+<ul>
+<li>Using SQLite – Setup and creating a Database</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kn">package</span> <span class="n">whatever</span><span class="o">.</span><span class="na">com</span>
+
+<span class="kn">import</span> <span class="nn">android.content.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.database.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.database.sqlite.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo</span> <span class="kd">extends</span> <span class="n">SQLiteOpenHelper</span>
+<span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DBNAME</span> <span class="o">=</span> <span class="s">&quot;mydb&quot;</span><span class="o">;</span>
+  <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">NAME</span> <span class="o">=</span> <span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="n">AGE</span> <span class="o">=</span> <span class="s">&quot;age&quot;</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">Demo</span><span class="o">(</span><span class="n">Context</span> <span class="n">c</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="n">DBNAME</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="c1">// 3rd arg is object of SQLite factory, 4th is version # of database</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">SQLiteDatabase</span> <span class="n">db</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="n">String</span> <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;create table info ( _id int primary key auto increment, &quot;</span> <span class="o">+</span>
+    <span class="s">&quot;name text, age int );&quot;</span><span class="o">;</span>
+    <span class="n">db</span><span class="o">.</span><span class="na">execSQL</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>     <span class="c1">// execSQL() is good for SQL commands that do not return a value </span>
+
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUpgrade</span><span class="o">(</span><span class="n">SQLiteDatabase</span> <span class="n">db</span><span class="o">,</span> <span class="kt">int</span> <span class="n">oldVersion</span><span class="o">,</span> <span class="kt">int</span> <span class="n">newVersion</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="n">db</span><span class="o">.</span><span class="na">execSQL</span><span class="o">(</span><span class="s">&quot;drop table if exists info&quot;</span><span class="o">);</span>
+    <span class="n">onCreate</span><span class="o">(</span><span class="n">db</span><span class="o">);</span>   <span class="c1">// re-creates the table.</span>
+  <span class="o">}</span>
+
+  <span class="n">SQLiteDatabase</span> <span class="n">db</span><span class="o">;</span>
+  <span class="n">db</span> <span class="o">=</span> <span class="n">openOrCreateDatabase</span><span class="o">(</span><span class="s">&quot;mydb&quot;</span><span class="o">,</span> <span class="n">SQLiteDatabase</span><span class="o">.</span><span class="na">CREATE_IF_NECESSARY</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+  <span class="n">db</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>     <span class="c1">// since the version number in the create statement, above, was null</span>
+  <span class="kt">int</span> <span class="n">dbVersion</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span>
+
+  <span class="c1">// when making changes to the database, need to lock it so that other threads cannot make</span>
+  <span class="c1">// changes at the same time.</span>
+  <span class="n">db</span><span class="o">.</span><span class="na">setLockEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<h3>Inserting Data</h3>
+
+<p>The insert() method returns the record number, and –1 if the insert failed.  This can be compared to 0 to determine if the insert succeeded.  InsertOrThrow can be used instead to throw an Exception on fail.</p>
+
+<div class="highlight"><pre><code class="java"><span class="n">ContentValues</span> <span class="n">cv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ContentValues</span><span class="o">();</span>
+<span class="n">cv</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">NAME</span><span class="o">,</span> <span class="s">&quot;John&quot;</span><span class="o">);</span>
+<span class="n">cv</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">AGE</span><span class="o">,</span> <span class="mi">19</span><span class="o">);</span>
+<span class="n">db</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="s">&quot;info&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="n">cv</span><span class="o">);</span>  <span class="c1">// arg1 is name of table, arg2 is useless</span>
+
+<span class="n">cv</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">NAME</span><span class="o">,</span> <span class="s">&quot;Abbas&quot;</span><span class="o">);</span>
+<span class="n">cv</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">AGE</span><span class="o">,</span> <span class="mi">82</span><span class="o">);</span>
+<span class="n">db</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="s">&quot;info&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="n">cv</span><span class="o">);</span> 
+</code></pre>
+</div>
+
+
+<h3>Getting Data</h3>
+
+<p>A cursor is needed to handle the return values of a multiple-line select statement.</p>
+
+<div class="highlight"><pre><code class="java"><span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;select name, age from info;&quot;</span><span class="o">;</span>
+<span class="n">Cursor</span> <span class="n">c</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">rowQuery</span><span class="o">();</span>
+<span class="k">while</span> <span class="o">(</span> <span class="o">!</span> <span class="n">c</span><span class="o">.</span><span class="na">moveToNext</span><span class="o">()</span> <span class="o">)</span>
+<span class="o">{</span>
+  <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+
+  <span class="err">…</span><span class="o">.</span>
+<span class="o">}</span>
+
+<span class="n">c</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="c1">// make sure to close the Cursor to avoid creating a memory leak</span>
+</code></pre>
+</div>
+
+
+<h3>A more efficient way to insert data with many fields</h3>
+
+<p>insert() is overloaded to accept another way of inserting data:</p>
+
+<p><code>db.insert("info", name, "John");</code>
+<code>db.insert("info", age, 32);</code></p>
+
+<p>It does still return the record id.</p>
+
+<h3>Deleting Records</h3>
+
+<p>Google recommends using Integer rather than int to let Java autobox in case it changes in the future.</p>
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteRecord</span><span class="o">(</span><span class="n">SQLiteDatabase</span> <span class="n">db</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">recID</span><span class="o">)</span>
+<span class="o">{</span>
+  <span class="n">db</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">&quot;emp&quot;</span><span class="o">,</span> <span class="s">&quot;id = ?&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span> <span class="n">recID</span><span class="o">.</span><span class="na">toString</span><span class="o">()});</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<h3>Doing this in an Activity</h3>
+
+<p>Since the class can't extend both Activity and SQLiteOpenHelper, a different method is necessary.</p>
+
+<div class="highlight"><pre><code class="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo1</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+  <span class="n">SQLiteDatabase</span> <span class="n">myDB</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="err">…</span>
+
+    <span class="n">myDB</span> <span class="o">=</span> <span class="n">openOrCreateDatabase</span><span class="o">(</span><span class="s">&quot;my_sqlite_database.db&quot;</span><span class="o">,</span>
+      <span class="n">SQLiteDatabase</span><span class="o">.</span><span class="na">CREATE_IF_NECESSARY</span><span class="o">,</span>
+      <span class="kc">null</span><span class="o">);</span>
+
+    <span class="n">myDB</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">myDB</span><span class="o">.</span><span class="na">setLockingEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<h3>The mode for opening a database can be:</h3>
+
+<ul>
+<li>CREATE_IF_NECESSARY</li>
+<li>OPEN_READONLY</li>
+<li>OPEN_READWRITE</li>
+</ul>
+
+
+<p>long getMaximumSize() will return the max size of a database.</p>
+
+<p>SQLiteDatabase.openDatabase(String db, null, int mode)
+{</p>
+
+<p>}</p>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>12 Apr 2012</span> &raquo; <a href="/2012/04/12/Android_week11.html">Android Week#11 Apr12, 2012</a></li>
+    
+      <li><span>05 Apr 2012</span> &raquo; <a href="/2012/04/05/Android_week10.html">Android Week#10 Apr05, 2012</a></li>
+    
+      <li><span>15 Mar 2012</span> &raquo; <a href="/2012/03/15/Android_week9.html">Android Week#9 Mar15, 2012</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        mamonluk<br />
+		website
+        
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="https://github.com/mamonluk">github.com/mamonluk</a><br />
+		<a href="http://whatsnerdy.com">whatsnerdy</a><br/>
+      </p>
+    </div>
+    
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+
+
+<form 
+name="search" onSubmit="return findInPage(this.string.value);"> 
+<div align="center"> <p><font size=3> <input name="string" 
+type="text" size=15 onChange="n = 0;"> </font> <input 
+type="submit" value="Search Page"> </p> </div> 
+</form>
+</body>
+</html>
