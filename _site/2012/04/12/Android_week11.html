@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Android Week#11 Apr12, 2012</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+
+
+
+<script language="JavaScript"> 
+<!-- Original by http://javascript.internet.com More javascripts http://www.hypergurl.com 
+--> var NS4 = (document.layers); // Which browser? var IE4 = (document.all); 
+var win = window; // window to search. var n = 0; function findInPage(str) { var 
+txt, i, found; if (str == "") return false; // Find next occurance of 
+the given string on the page, wrap around to the // start of the page if necessary. 
+if (NS4) { // Look for match starting at the current point. If not found, rewind 
+// back to the first match. if (!win.find(str)) while(win.find(str, false, true)) 
+n++; else n++; // If not found in either direction, give message. if (n == 0) 
+alert("Not found."); } if (IE4) { txt = win.document.body.createTextRange(); 
+// Find the nth match from the top of the page. for (i = 0; i <= n && 
+(found = txt.findText(str)) != false; i++) { txt.moveStart("character", 
+1); txt.moveEnd("textedit"); } // If found, mark it and scroll it into 
+view. if (found) { txt.moveStart("character", -1); txt.findText(str); 
+txt.select(); txt.scrollIntoView(); n++; } // Otherwise, start over at the top 
+of the page and find first match. else { if (n > 0) { n = 0; findInPage(str); 
+} // Not found anywhere, give message. else alert("Not found."); } } 
+return false; } </script>
+
+
+
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">mamonluk</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Android Week#11 Apr12, 2012</h1>
+
+<p class="meta">12 Apr 2012 - San Francisco</p>
+
+
+<h3>Side Note</h3>
+
+<p>Scanner class has nice method called "skip" which allows you to skip over 0 or more lines to avoid lines with the supplied regex</p>
+
+<p>runtime class lets you "push" automatically.</p>
+
+<hr />
+
+<h3>SD Card</h3>
+
+<p>sd cards were originally designed for handling music,movies,animation,photos etc.
+there is a utility is the sdk calld: mksdcard</p>
+
+<p>this is for manually creating the sdcard.</p>
+
+<p>first create a directory and put the sd card into it.</p>
+
+<pre><code>   cd /android              (this is where you sdk is)
+   mkdir sdcard
+   mksdcard 512M /android/sdcard/sdcard.img
+</code></pre>
+
+<p>( ^ size (no less than 8 mb! can be Ko r M, no (G!)), path (include .img                           extension!),</p>
+
+<p><code>emulator -avd em22 -sdcard /android/sdcard/sdcard.img</code></p>
+
+<ul>
+<li><p>to push into it:
+<code>adb push /tmp/myfile /mnt/sdcard/myfile</code>
+(android version less than 2.2 there was no /mnt/ )</p></li>
+<li><p>what is inside the sdcard?
+dcim    (subdirectory: digitial camera image directory)
+standard directory. all manufacturers of cameras for devices, should follow this.
+This directory is in the root of your sdcard!
+it has one or more subdirectories, and their names should follow certain rules:
+it should be 8 characters long, 123ABCDE (first 3 characters should be numeric, followed by 5 uppercase letters)
+some manufacturers have created a directory called Camera (this is bad!) in the emulator there is a directory instead dcim called 100ANDRO. There is no method in java telling us where camera pictures are. :(</p></li>
+<li><p>google has some remedies, but they are not 100% elegent.</p></li>
+<li>use this method when working with SDCard:
+&lt;% highlight java %>
+File Environment.getExternalStorageDirectory()</li>
+<li>directories for certain data, use these constants:
+DIRECTORY_ALARMS (audio alarm files go here)
+DIRECTORY_DCIM (all camera pictures go here)
+DIRECTORY_DOWNLOADS (items user has dled)
+DIRECTORY_MOVIES (movie files)
+DIRECTORY_MUSIC (all music files)
+DIRECTORY_NOTIFICATIONS (audio files for notifcations)
+DIRECTORY_PICTURES (all image files, inside DCIM)
+DIRECTORY_PODCASTS (all radioshows etc)
+DIRECTORY_RINGTONES (ring tones for the phone)
+&lt;% endhighlight %>
+example:</li>
+</ul>
+
+
+<p><code>File f = new File(Environment.DIRECTORY_MUSIC);</code> - will give you complete path</p>
+
+<ul>
+<li><p>these do not exisit on emulator! only actual device! on emulator                                      use these directories:
+mnt/sdcard/Alarms
+mnt/sdcard/DCIM
+mnt/sdcard/Download (not plural!)
+mnt/sdcard/Movies
+mnt/sdcard/Music
+mnt/sdcard/Notifications
+mnt/sdcard/Pictures
+mnt/sdcard/Podcasts
+mnt/sdcard/Ringtones</p></li>
+<li><p>Now to locate the directories in your program:
+<code>File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);</code></p></li>
+<li><p>when adding a file to the sdcard (v1.6 and up) very likely youll get error message saying you cannot write into sdcard. you need to add a permission to the AndroidManifest.xml permission : add to the last part of the xml file:
+<code>&lt;user-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;</code></p></li>
+<li><p>there are many permissions like this, that you will need to use in the future. abbas adds all of them (7-8 of them) into the AndroidManifest file, whether he uses them or not. just put them in there to be safe. one after the other.</p></li>
+</ul>
+
+
+<p><user-permission android:name="android.permission.INTERNET" /></p>
+
+<p><user-permission android:name="android.permission.READ_CONTACTS"/></p>
+
+<p><user-permission android:name="android.permission.WRITE_CONTACTS"/></p>
+
+<p><user-permission android:name="android.permission.READ_CALENDAR"/></p>
+
+<p><user-permission android:name="android.permission.WRITE_CALENDAR"/></p>
+
+<p><user-permission android:name="android.permission.RECORD_AUDIO"/></p>
+
+<p><user-permission android:name="android.permission.BATTERY_STATS"/></p>
+
+<p><user-permission android:name="android.permission.BLUETOOTH"/></p>
+
+<ul>
+<li>the best place to put these in the AndroidManifest.xml file is under the closing application tag
+</application>
+<put permissions here></li>
+</ul>
+
+
+<h3>SQLite</h3>
+
+<ul>
+<li>Has two different mode name <code>shell mode</code> and <code>command line</code></li>
+<li>SQlite commands start with <code>.</code> i.e. <code>.help</code> <code>.tables</code> <code>.separator</code> <code>.exit</code></li>
+<li>How to start SQLite3 <code>sqlite3</code></li>
+<li>Lets create a database <code>sqlite3 mydb</code> this will go to interactive
+<code>sqlite&gt; create table test(id integer primary key auto increment, name text);</code>
+<code>sqlite&gt; insert into test (name) values ('Alex');</code>
+<code>sqlite&gt; insert into test (name) values ('John');</code></li>
+<li><p>make sure you add auto increment if you want the primary key to be automatically incremented</p></li>
+<li><p>or you can do this too
+<code>sqlite&gt; insert into test (name) values ('Alex'),('John');</code></p></li>
+</ul>
+
+
+<h3>Configuration settings of SQLite</h3>
+
+<ul>
+<li><code>.mode column</code></li>
+<li><code>.headers on</code>    //put the headers on, the name of each column</li>
+<li><code>.show</code>   //gives you internal settings of sqlite</li>
+<li><p><code>.prompt sqlite&gt;&gt;</code> //will change the default prompt to sqlite>></p></li>
+<li><p>Example SQL Query</p></li>
+<li><code>select * from test;</code></li>
+<li><code>select count(*) from test;</code></li>
+<li><p>last_insert_rowid()` - remember do not use this to get the number of rows in your table, cause the primary key will be random unless you do auto increment</p></li>
+<li><p>How to create csv file(csv file will put output with , as separator)
+<code>.output file.csv</code>
+<code>.separator ,</code>
+<code>select * from test;</code>
+<code>.output stdout</code>
+//the example output will be <code>1,Alex, 2,John,3,David</code></p></li>
+</ul>
+
+
+<p><code>.output file.csv</code>
+<code>.mode csv</code>
+<code>select * from test;</code>
+<code>.output stdout</code></p>
+
+<ul>
+<li><p>How to transfer the table
+<code>create table test2(id integer primary key, name test);</code>
+<code>.import file.csv test2</code>
+<code>sqlite3 mydb .dump &gt; test.sql</code></p></li>
+<li><p>How to import DB
+<code>sqlite3 -init test.sql mydb2 .exit</code> this will import test.sql to mydb2
+<code>sqlite3 mydb2 &lt; test.sql</code> - will import test.sql to mydb2</p></li>
+</ul>
+
+
+<h3>How to handle sqlite in android</h3>
+
+<p>&lt;% highlight java%>
+adb shell
+ls /system/bin                      #will give you all the shell command available for android<br/>
+ls /data/data                       #you will see all of your database that you have
+ls /data/data/com.androiders.contacts/databases         #you will see contacts.db
+ls -R /data/data/*/databases                            #will give you list ilke alarms.db, contacts.db, downloads.db, internal.db, settings.db, mmssms.db, telephony.db
+&lt;% endhighlight %></p>
+
+<h3>How to loop up DB tables</h3>
+
+<p><code>sqlite3 /data/data/com.androiders.contacts/databases/contacts.db</code>
+<code>sqlite&gt; .tables</code></p>
+
+<h3>Want to transfer DB to your local hard disk</h3>
+
+<p><code>adb pull /data/data/com.androiders.contacts/databases/contacts.db contacts.db</code></p>
+
+<h3>Next week - create database, tables, populate, run query</h3>
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>19 Apr 2012</span> &raquo; <a href="/2012/04/19/Android_week12.html">Android Week#12 Apr12, 2012</a></li>
+    
+      <li><span>05 Apr 2012</span> &raquo; <a href="/2012/04/05/Android_week10.html">Android Week#10 Apr05, 2012</a></li>
+    
+      <li><span>15 Mar 2012</span> &raquo; <a href="/2012/03/15/Android_week9.html">Android Week#9 Mar15, 2012</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        mamonluk<br />
+		website
+        
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="https://github.com/mamonluk">github.com/mamonluk</a><br />
+		<a href="http://whatsnerdy.com">whatsnerdy</a><br/>
+      </p>
+    </div>
+    
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+
+
+<form 
+name="search" onSubmit="return findInPage(this.string.value);"> 
+<div align="center"> <p><font size=3> <input name="string" 
+type="text" size=15 onChange="n = 0;"> </font> <input 
+type="submit" value="Search Page"> </p> </div> 
+</form>
+</body>
+</html>
