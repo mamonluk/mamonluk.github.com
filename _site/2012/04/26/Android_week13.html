@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Android Week#13 Apr12, 2012</title>
+   <meta name="author" content="Tom Preston-Werner" />
+   <link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- Typekit -->
+   <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
+   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+
+
+
+<script language="JavaScript"> 
+<!-- Original by http://javascript.internet.com More javascripts http://www.hypergurl.com 
+--> var NS4 = (document.layers); // Which browser? var IE4 = (document.all); 
+var win = window; // window to search. var n = 0; function findInPage(str) { var 
+txt, i, found; if (str == "") return false; // Find next occurance of 
+the given string on the page, wrap around to the // start of the page if necessary. 
+if (NS4) { // Look for match starting at the current point. If not found, rewind 
+// back to the first match. if (!win.find(str)) while(win.find(str, false, true)) 
+n++; else n++; // If not found in either direction, give message. if (n == 0) 
+alert("Not found."); } if (IE4) { txt = win.document.body.createTextRange(); 
+// Find the nth match from the top of the page. for (i = 0; i <= n && 
+(found = txt.findText(str)) != false; i++) { txt.moveStart("character", 
+1); txt.moveEnd("textedit"); } // If found, mark it and scroll it into 
+view. if (found) { txt.moveStart("character", -1); txt.findText(str); 
+txt.select(); txt.scrollIntoView(); n++; } // Otherwise, start over at the top 
+of the page and find first match. else { if (n > 0) { n = 0; findInPage(str); 
+} // Not found anywhere, give message. else alert("Not found."); } } 
+return false; } </script>
+
+
+
+</head>
+<body>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<div class="site">
+  <div class="title">
+    <a href="/">mamonluk</a>
+    <a class="extra" href="/">home</a>
+  </div>
+  
+  <div id="post">
+<h1>Android Week#13 Apr12, 2012</h1>
+
+<p class="meta">26 Apr 2012 - San Francisco</p>
+
+
+<h3>MultiThreading in Android:</h3>
+
+<p>normally programs have one process. threads allow you to have multiple processes.
+processing is done by calling</p>
+
+<p>fork()
+p1 = fork();</p>
+
+<ul>
+<li><p>creating a process by forking is very costly with resources! creating several of these, could kill your system,
+(on a phone).on your cellphone, one process can be divided into smaller pieces. these pieces are called threads. this way, we have one process with multiple threads, and it is much more efficient.</p></li>
+<li><p>Also called multithreading.</p></li>
+<li><p>working with threads is very tricky! when you create several threads, and they are supposed to all access a single file, or a single data structure, problems can occur!we need to find a mechanism to control these threads. for instance, once thread writes into a data structure, and the other threads dont access that data until the first thread is done.</p></li>
+<li><p>many methods that are available in java and android are NOT safe for multithreading. they are called thread unsafe methods. if you use them, you can corrupt things.</p></li>
+<li><p>the majority of the variables we use in java... none of these are made for handling threads efficiently or correctly! if you use a regular variable to handle threads, you have problems!</p></li>
+<li><p>after version 5 of java, they made something called "atomic" variables.</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="n">atomicboolean</span>
+<span class="n">atomicinteger</span>
+<span class="n">atomicshort</span>
+<span class="n">etc</span><span class="o">.</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>we also have atomic datastructures, like atomicarray etc.</li>
+<li>atomic are primitive types still!</li>
+<li><p>90% of collections are thread safe with atomic.</p></li>
+<li><p>When you are running your application, all of our activities are in one thread: main application thread.
+suppose you are using the setText() method.. whenever you use it, the text on the screen is updated. this is not simple! the data you enter goes into a data structure called message queue. it will wait here, and when the time comes, your data will be taken from the message cue, and THEN will be placed on the screen. the reason for this, is that if there are several threads, and all are trying to display something, they will conflict with each other. so based on priority, the data in the message queue is displayed.</p></li>
+<li><p>all of the activies that involve UI elements, by design, must be done in the "main application thread". this simply means, you cannot cannot some other threads to do this job. so if you have 5 threads, you cant have each of them displaying various things... all of these UI events must be handled in the main application thread. this can be a big problem. lets say you want to show the progress bar. (there are 2 types of progress bars:</p></li>
+</ul>
+
+
+<p>horizontal bar that gets filled up. (this is called determinant, means you know how long)
+circular that turns (this is called indeterminant, meaning you dont know how long)</p>
+
+<p>so if your activity is measurable, then use determinant otherwise use indeterminant.</p>
+
+<p>only use these, for when jobs take a long time.</p>
+
+<p>if you are working with a time consuming job(longer than half a second), you CANNOT put that in main application thread. if you do, you will end up with ANR (application not responding) error. you will see this often! when you see ANR, android has automatically killed your process!</p>
+
+<p>as a result, no matter what it is, your time consuming jobs must be done in a seperate thread. maybe you are sorting lots of data? you need to show a status bar to show the user that something is happening in hte background.</p>
+
+<p>so how do we have the threads talk to each other? what if you are sorting in one thread, and display UI stuff from that sorted data? they need to share this data, as they cant be in the same thread! use a mechanism called Handler. Handler lets communication take palce between your thread and the main application thread. Handler acts as a bridge.</p>
+
+<p>majority of onSomething methods (onCreate etc), by design must run in the main application thread.</p>
+
+<p>how to make determinant bar:
+(there are many ways to create progress bar GUI... easiest way is to use xml. in main.xml you can make progressbar tag. immediately the default will show up (indetermanint). if you just put it in there like this, it will spin forever! default is medium size, but you can make it large or small. etc</p>
+
+<p>there is the method: setMax(int n) that sets max value for determinant bar. 0-100 for example. default starting point is 0, but you can change that too: setProgress(int n) to set the starting number. at any time you could run a method getProgress() which says how much progress we have covered!</p>
+
+<p>there are 2 ways to specifiy if you want determinant or indeterminant... xml and in java.</p>
+
+<p>in java, there is a method: setIndeterminant(boolean b)</p>
+
+<h3>Sample Program creating progress bar</h3>
+
+<ul>
+<li><p>in your main.xml</p>
+
+<p>  //in main.xml
+  //default is indeterminant if not specified!
+  <LinearLayout></p>
+
+<pre><code>  &lt;ProgressBar android:id="@+id/progressbar"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+</code></pre>
+
+<p>  />
+  </LinearLayout></p></li>
+<li><p>in your .java file</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="java"><span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.widget.progressBar</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">progress</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">ProgressBar</span> <span class="n">pb</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">progressStatus</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Handler</span> <span class="n">h</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Handler</span><span class="o">();</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">pb</span> <span class="o">=</span> <span class="o">(</span><span class="n">ProgressBar</span><span class="o">)</span> <span class="n">FindViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">progressbar</span><span class="o">);</span>
+        
+        <span class="n">pb</span><span class="o">.</span><span class="na">setMax</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>         <span class="c1">//this is for making progress bar indeterminant</span>
+        <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span>
+          <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+          <span class="o">{</span>
+            <span class="k">while</span><span class="o">(</span><span class="n">progressStatus</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="o">)</span>
+            <span class="o">{</span>
+                <span class="n">progressStatus</span><span class="o">=</span><span class="n">doSomeWork</span><span class="o">();</span>
+            <span class="o">}</span>
+            
+            <span class="c1">//hide the proress bar now</span>
+            <span class="n">h</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span> <span class="o">()</span>
+            <span class="o">{</span>
+               <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+                <span class="o">{</span>
+                    <span class="n">pb</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="mi">8</span><span class="o">)</span>  <span class="c1">//0=visibility, 4=invisible, 8=gone</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+        
+            <span class="c1">//Different version, so that progress bar will become determinant</span>
+            <span class="c1">//h.post(new Runnable()</span>
+            <span class="c1">//{</span>
+            <span class="c1">// public void run()</span>
+            <span class="c1">// {</span>
+            <span class="c1">//     pb.setProgress(progressStatus);</span>
+            <span class="c1">// }</span>
+            <span class="c1">//});</span>
+            
+          <span class="o">}</span>      
+            <span class="kd">private</span> <span class="kt">int</span> <span class="nf">doSomeWork</span><span class="o">()</span>
+            <span class="o">{</span> <span class="n">sleep</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>  <span class="k">return</span><span class="o">(++</span><span class="n">progress</span><span class="o">);</span> <span class="o">}</span>
+        <span class="o">}).</span><span class="na">start</span><span class="o">();</span>
+        
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleep</span><span class="o">(</span><span class="kt">int</span> <span class="n">msec</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">try</span><span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">slee</span><span class="o">(</span><span class="n">msec</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">catch</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">){</span> <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>    
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<ul>
+<li>In you main.xml
+//this will make the progress bar determinant
+style="?android:attr/progressBarStyleHorizontal"  <br/>
+style="?android:attr/progressBarStyleLarge"
+style="?android:attr/progressBarStyleSmall"</li>
+</ul>
+
+
+<h3>Using Handler</h3>
+
+<div class="highlight"><pre><code class="java"><span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Bundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Message</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.progressBar</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.atomic.AtomicBoolean</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoHandler</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+    <span class="n">progressBar</span> <span class="n">pb</span><span class="o">;</span>
+    <span class="c1">//define the hanlder to receive the message from the message pool</span>
+    <span class="n">Handler</span> <span class="n">h</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Handler</span><span class="o">(){</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">Message</span> <span class="n">msg</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">pb</span><span class="o">.</span><span class="na">incrementProgressBy</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+    
+    <span class="n">AtomicBoolean</span> <span class="n">isRunning</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicBoolean</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">b</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">)</span>
+        <span class="n">pb</span><span class="o">=(</span><span class="n">ProgressBar</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">progressbar</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">();</span>
+        <span class="n">pb</span><span class="o">.</span><span class="na">setProgress</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span>
+        <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+            <span class="o">{</span>
+                <span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">20</span> <span class="o">&amp;&amp;</span> <span class="n">isRunning</span><span class="o">.</span><span class="na">get</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span>
+                <span class="o">{</span>
+                    <span class="n">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+                    <span class="n">h</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">h</span><span class="o">.</span><span class="na">obtainMessag</span><span class="o">());</span>
+                <span class="o">}</span>        
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="n">isRunning</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStop</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onStop</span><span class="o">();</span>
+        <span class="n">isRunning</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>     
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>03 May 2012</span> &raquo; <a href="/2012/05/03/Android_week14.html">Android Week#14 May03, 2012</a></li>
+    
+      <li><span>19 Apr 2012</span> &raquo; <a href="/2012/04/19/Android_week12.html">Android Week#12 Apr12, 2012</a></li>
+    
+      <li><span>12 Apr 2012</span> &raquo; <a href="/2012/04/12/Android_week11.html">Android Week#11 Apr12, 2012</a></li>
+    
+  </ul>
+</div>
+  
+  <div class="footer">
+    <div class="contact">
+      <p>
+        mamonluk<br />
+		website
+        
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="https://github.com/mamonluk">github.com/mamonluk</a><br />
+		<a href="http://whatsnerdy.com">whatsnerdy</a><br/>
+      </p>
+    </div>
+    
+  </div>
+</div>
+
+<a href="http://github.com/mojombo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(206,0.3,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6016902-1");
+pageTracker._trackPageview();
+</script>
+<!-- Google Analytics end -->
+
+
+
+<form 
+name="search" onSubmit="return findInPage(this.string.value);"> 
+<div align="center"> <p><font size=3> <input name="string" 
+type="text" size=15 onChange="n = 0;"> </font> <input 
+type="submit" value="Search Page"> </p> </div> 
+</form>
+</body>
+</html>

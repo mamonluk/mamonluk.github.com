@@ -4,13 +4,466 @@
  <title>mamonluk</title>
  <link href="http://tom.preston-werner.com/atom.xml" rel="self"/>
  <link href="http://tom.preston-werner.com/"/>
- <updated>2012-04-26T23:07:16-07:00</updated>
+ <updated>2012-05-14T19:17:17-07:00</updated>
  <id>http://mamonluk.github.com/</id>
  <author>
    <name>mamonluk</name>
    <email>mamonluk7@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Android Week#14 May03, 2012</title>
+   <link href="http://tom.preston-werner.com/2012/05/03/Android_week14.html"/>
+   <updated>2012-05-03T00:00:00-07:00</updated>
+   <id>http://tom.preston-werner.com/2012/05/03/Android_week14</id>
+   <content type="html">&lt;h1&gt;Android Week#14 May03, 2012&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;03 May 2012 - San Francisco&lt;/p&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;pp 407 in textbook
+sendMessage() - put msg into que
+sendMessageAtFrontOfQueue() - put mes in front of que
+sendMessageAtTime(msec) - put msg into queue @certain time
+sendMessageDelayed(msec) - puts msg into queue after m msec&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Alerntaive to emulator&lt;/h3&gt;
+
+&lt;p&gt;Droid@Screen
+ANDROID_HOME
+ANDROID_SDK_HOME&lt;/p&gt;
+
+&lt;p&gt;droidAtScreen.nnn.jar
+droidAtScreen-1.0.1.jar&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;modify antfile (comment out line calling emulator replace w this line)
+&lt;code&gt;alias DS=java -jar droidAtScreen-1.0.1.jar&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;#&lt;/h2&gt;
+
+&lt;p&gt;obtainMessage() - create object of a message and put it in message queue, this is empty message&lt;/p&gt;
+
+&lt;p&gt;obtainMessage(int what) -
+i.e. 1=spring, 2=summer or enum season
+se{SPRING, SUMMER,FALL,WINTER}&lt;/p&gt;
+
+&lt;p&gt;obtainMessage(se.getValue(SUMMER));&lt;/p&gt;
+
+&lt;p&gt;obtain(int what, Object obj) - pass an object
+i.e. Document d = new Document(); //object must be parcelable
+obtainMessage(1, d);    //class Document extends GoodDoc implements Parcelable&lt;/p&gt;
+
+&lt;p&gt;obtainMessage(int what, int arg1, int arg2) -
+obtainMessage(int what, int arg1, int arg2, Object o)
+obtainMessage(Object ob)&lt;/p&gt;
+
+&lt;h3&gt;How to get the message from the message pool&lt;/h3&gt;
+
+&lt;p&gt;package my.demo.ProgressBar;&lt;/p&gt;
+
+&lt;p&gt;public class DemoHandler extends Activity
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    progressBar pb;
+
+    //we are overloading the mehod handleMessage
+    Handler h = new Handler
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            pb.incrementProgressBy(5);
+        }
+    };
+
+    AtomicBoolean isRunning = new AtomicBoolean(false);
+
+    @Override
+    public void onCreate(Bundle b)
+    {
+        super.onCreate(b);
+        setContentView(R.layout.main)
+        pb = (ProgressBar)findViewById(R.id.progressbar);
+    }
+
+    public void onStart()
+    {
+        super.onStart();
+        pb.setProgress(0);
+
+        Thread t = new Thread(new RUnnable()
+            public void run()
+            {
+                for(int i=0; i&amp;lt;20 &amp;amp;&amp;amp; isRunning.get(); i++)
+                {
+                    sleep(1000);
+                    h.sendMessage(h.obtainMessage());
+                }
+            });
+            isRunning.set(true);
+            t.start();
+    }
+
+    //remember when for example you receive an emergency call
+    //then onStop() method will be called
+    public void onStop()
+    {
+        super.onStop();
+        isRunning.set(false);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;h3&gt;Services are running in the background&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A Services is not dependent on an Activity, A service can still run even after the activity is dead&lt;/li&gt;
+&lt;li&gt;For Example a music that is playing music in the background&lt;/li&gt;
+&lt;li&gt;Services is like daemon in linux&lt;/li&gt;
+&lt;li&gt;generate program that generates random number, then call startService(), you also have a method call stopService()&lt;/li&gt;
+&lt;li&gt;Service can run forever&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;package my.demo.Service;
+import andriod.app.SErvices
+import android.content.Intent;
+import nadroid.os.IBinder;
+import android.widget.Toast;&lt;/p&gt;
+
+&lt;p&gt;import java.net.*;&lt;/p&gt;
+
+&lt;p&gt;public class MyService extends Service
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Override 
+public IBinder onBind(Intent arg0){ return null; }
+
+@Override
+public int onStartCommand(Intent i, int flages, int startId)
+{
+    Toast.makeText(this, &quot;Service Started&quot;, Toast.Length_LONG).show();
+    return(START_STICKY) //this means to run forever
+    //START_NO_STICKY - 
+    //START_REDELIVER_INTENT - use when onStart command is invoked
+}
+
+@Override
+public void onDestroy()
+{
+    super.onDestroy();
+    Toast.makeText(this, &quot;Service Destroid&quot;, Toast.LENGTH_LONG).show();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;h3&gt;in your AndroidManifest.xml&lt;/h3&gt;
+
+&lt;p&gt;&lt;service android:name =&quot;.MyService&quot;&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;intent-filter&amp;gt;
+    &amp;lt;action android:name=&quot;my.demo.Servce&quot; /&amp;gt;
+&amp;lt;/intent-filter&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/service&gt;&lt;/p&gt;
+
+&lt;h3&gt;sample program using Services&lt;/h3&gt;
+
+&lt;p&gt;package my.demo.Service;
+import andriod.app.Services
+import android.content.Intent;
+import nadroid.os.IBinder;
+import android.widget.Toast;&lt;/p&gt;
+
+&lt;p&gt;public class MainActivity extends Activity
+{&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@Override
+public void onCreate(Bundle b)
+{
+    super.onCreate(b);
+    setContentView(R.layout.main);
+    Button btnStart = (Button)findViewById(R.id.btnStartService);
+
+    btnStart.setOnClickListener(new View.onClickListener()
+    {
+        public void onClick(View v)
+        {
+            startService(new Intent(getBaseContext(), &quot;MyService.class&quot;));
+
+            //new Intent(&quot;my.demo.SErvice&quot;) //another way of calling service, the param is the name of package. You only use this when you have 1 service in your package, if you have two service you need to use the other method
+
+        }
+    });
+
+    Button btnStop = (Button)findViewById(R.id.btnStopService);
+    btnStop.setOnClickListener(new View.onClickListener()
+    {
+        public void onClick(View v)
+        {
+            stopService(new Intent(getBaseContext(), &quot;MyService.class&quot;))
+        }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In your main.xml
+&lt;Button android:id =&quot;@+id/btnStartService&quot;
+  android:layout_width=&quot;fill_parent&quot;
+  android:layout_height=&quot;wrap_content&quot;
+  android:text=&quot;Start Service&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&amp;lt;Button android:+&quot;@id/btnStopServie&quot;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;---
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;/&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Android Week#13 Apr12, 2012</title>
+   <link href="http://tom.preston-werner.com/2012/04/26/Android_week13.html"/>
+   <updated>2012-04-26T00:00:00-07:00</updated>
+   <id>http://tom.preston-werner.com/2012/04/26/Android_week13</id>
+   <content type="html">&lt;h1&gt;Android Week#13 Apr12, 2012&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;26 Apr 2012 - San Francisco&lt;/p&gt;
+
+
+&lt;h3&gt;MultiThreading in Android:&lt;/h3&gt;
+
+&lt;p&gt;normally programs have one process. threads allow you to have multiple processes.
+processing is done by calling&lt;/p&gt;
+
+&lt;p&gt;fork()
+p1 = fork();&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;creating a process by forking is very costly with resources! creating several of these, could kill your system,
+(on a phone).on your cellphone, one process can be divided into smaller pieces. these pieces are called threads. this way, we have one process with multiple threads, and it is much more efficient.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Also called multithreading.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;working with threads is very tricky! when you create several threads, and they are supposed to all access a single file, or a single data structure, problems can occur!we need to find a mechanism to control these threads. for instance, once thread writes into a data structure, and the other threads dont access that data until the first thread is done.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;many methods that are available in java and android are NOT safe for multithreading. they are called thread unsafe methods. if you use them, you can corrupt things.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;the majority of the variables we use in java... none of these are made for handling threads efficiently or correctly! if you use a regular variable to handle threads, you have problems!&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;after version 5 of java, they made something called &quot;atomic&quot; variables.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;atomicboolean&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;atomicinteger&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;atomicshort&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;we also have atomic datastructures, like atomicarray etc.&lt;/li&gt;
+&lt;li&gt;atomic are primitive types still!&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;90% of collections are thread safe with atomic.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When you are running your application, all of our activities are in one thread: main application thread.
+suppose you are using the setText() method.. whenever you use it, the text on the screen is updated. this is not simple! the data you enter goes into a data structure called message queue. it will wait here, and when the time comes, your data will be taken from the message cue, and THEN will be placed on the screen. the reason for this, is that if there are several threads, and all are trying to display something, they will conflict with each other. so based on priority, the data in the message queue is displayed.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;all of the activies that involve UI elements, by design, must be done in the &quot;main application thread&quot;. this simply means, you cannot cannot some other threads to do this job. so if you have 5 threads, you cant have each of them displaying various things... all of these UI events must be handled in the main application thread. this can be a big problem. lets say you want to show the progress bar. (there are 2 types of progress bars:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;horizontal bar that gets filled up. (this is called determinant, means you know how long)
+circular that turns (this is called indeterminant, meaning you dont know how long)&lt;/p&gt;
+
+&lt;p&gt;so if your activity is measurable, then use determinant otherwise use indeterminant.&lt;/p&gt;
+
+&lt;p&gt;only use these, for when jobs take a long time.&lt;/p&gt;
+
+&lt;p&gt;if you are working with a time consuming job(longer than half a second), you CANNOT put that in main application thread. if you do, you will end up with ANR (application not responding) error. you will see this often! when you see ANR, android has automatically killed your process!&lt;/p&gt;
+
+&lt;p&gt;as a result, no matter what it is, your time consuming jobs must be done in a seperate thread. maybe you are sorting lots of data? you need to show a status bar to show the user that something is happening in hte background.&lt;/p&gt;
+
+&lt;p&gt;so how do we have the threads talk to each other? what if you are sorting in one thread, and display UI stuff from that sorted data? they need to share this data, as they cant be in the same thread! use a mechanism called Handler. Handler lets communication take palce between your thread and the main application thread. Handler acts as a bridge.&lt;/p&gt;
+
+&lt;p&gt;majority of onSomething methods (onCreate etc), by design must run in the main application thread.&lt;/p&gt;
+
+&lt;p&gt;how to make determinant bar:
+(there are many ways to create progress bar GUI... easiest way is to use xml. in main.xml you can make progressbar tag. immediately the default will show up (indetermanint). if you just put it in there like this, it will spin forever! default is medium size, but you can make it large or small. etc&lt;/p&gt;
+
+&lt;p&gt;there is the method: setMax(int n) that sets max value for determinant bar. 0-100 for example. default starting point is 0, but you can change that too: setProgress(int n) to set the starting number. at any time you could run a method getProgress() which says how much progress we have covered!&lt;/p&gt;
+
+&lt;p&gt;there are 2 ways to specifiy if you want determinant or indeterminant... xml and in java.&lt;/p&gt;
+
+&lt;p&gt;in java, there is a method: setIndeterminant(boolean b)&lt;/p&gt;
+
+&lt;h3&gt;Sample Program creating progress bar&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;in your main.xml&lt;/p&gt;
+
+&lt;p&gt;  //in main.xml
+  //default is indeterminant if not specified!
+  &lt;LinearLayout&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &amp;lt;ProgressBar android:id=&quot;@+id/progressbar&quot;
+ android:layout_width=&quot;wrap_content&quot;
+ android:layout_height=&quot;wrap_content&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;  /&gt;
+  &lt;/LinearLayout&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;in your .java file&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.Handler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.widget.progressBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainActivity&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activity&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;progress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProgressBar&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;progressStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Handler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Handler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;setContentView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;progress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ProgressBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FindViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;progressbar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;//this is for making progress bar indeterminant&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+          &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;progressStatus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;progressStatus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doSomeWork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            
+            &lt;span class=&quot;c1&quot;&gt;//hide the proress bar now&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Runnable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+               &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setVisibility&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//0=visibility, 4=invisible, 8=gone&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+        
+            &lt;span class=&quot;c1&quot;&gt;//Different version, so that progress bar will become determinant&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//h.post(new Runnable()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// public void run()&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// {&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//     pb.setProgress(progressStatus);&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// }&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;//});&lt;/span&gt;
+            
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;      
+            &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doSomeWork&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;progress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;msec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slee&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Throwable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;    
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;In you main.xml
+//this will make the progress bar determinant
+style=&quot;?android:attr/progressBarStyleHorizontal&quot;  &lt;br/&gt;
+style=&quot;?android:attr/progressBarStyleLarge&quot;
+style=&quot;?android:attr/progressBarStyleSmall&quot;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Using Handler&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.app.Activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.Bundle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.Handler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.os.Message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;android.widget.progressBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.concurrent.atomic.AtomicBoolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DemoHandler&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Activity&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;progressBar&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//define the hanlder to receive the message from the message pool&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Handler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Handler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;handleMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;incrementProgressBy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;AtomicBoolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isRunning&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AtomicBoolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;setContentView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ProgressBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;progressbar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setProgress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isRunning&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sendMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;obtainMessag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;        
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;isRunning&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onStop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onStop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;isRunning&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;     
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+</content>
+ </entry>
  
  <entry>
    <title>Android Week#12 Apr12, 2012</title>
